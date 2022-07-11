@@ -28,6 +28,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'id', title: __('Id')},
                         {field: 'user.username', title: __('User_id')},
                         {field: 'amount', title: __('Amount'), operate: 'LIKE'},
+                        {field: 'tx_id', title: __('转出地址')},
                         {field: 'image', title: __('Image'), operate: false, events: Table.api.events.image, formatter: Table.api.formatter.image},
                         {field: 'state', title: __('状态'), formatter: Table.api.formatter.label,searchList: {
                                 1:'待审核',
