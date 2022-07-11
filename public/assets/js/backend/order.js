@@ -47,11 +47,15 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                                 2:'已打款',
                                 3:'拒绝',
                             }},
-                        {field: 'fee', title: __('手续费USDT'), operate: 'LIKE'},
-                        {field: 'all', title: __('All')},
-                        {field: 'allusdt', title: __('usdt总金额')},
+
                         {field: 'usdtnum', title: __('代付USDT数量')},
                         {field: 'amount', title: __('代付人民币数量')},
+                        {field: 'all', title: __('All')},
+                        {field: 'allusdt', title: __('usdt总金额')},
+
+
+
+                        {field: 'fee', title: __('手续费USDT'), operate: 'LIKE'},
                         {field: 'usdtprice', title: __('Usdtprice')},
                         {field: 'submit_time', title: __('Submit_time'), operate:'RANGE', addclass:'datetimerange', autocomplete:false, formatter: Table.api.formatter.datetime},
                         {field: 'time', title: __('Time'), operate:'RANGE', addclass:'datetimerange', autocomplete:false, formatter: Table.api.formatter.datetime},
