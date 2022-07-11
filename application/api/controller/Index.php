@@ -304,6 +304,13 @@ class Index extends Api
         foreach ($data as $k=>$v){
             $v->time_str=date('Y-h-d m:s:i',$v->time);
             $v->submit_time_str=date('Y-h-d m:s:i',$v->submit_time);
+            if($v->state ==1){
+                $v->state_str='待审核';
+            }else if($v->state ==2){
+                $v->state_str='已打款';
+            }else{
+                $v->state_str='拒绝';
+            }
         }
         $this->success(__('成功'),$data);
     }
