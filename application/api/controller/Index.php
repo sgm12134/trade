@@ -143,7 +143,7 @@ class Index extends Api
             'address'=>$address
         ]);
         if ($ret) {
-            \app\common\model\User::money(-$amount,$this->auth->id,'提笔申请成功');
+            \app\common\model\User::money(-$amount,$this->auth->id,'提币1申请成功');
             $this->success(__('提交成功,等待审核'));
         } else {
             $this->error('提交失败');
@@ -255,7 +255,7 @@ class Index extends Api
             $query->field('username');
         }])->where('user_id',$this->auth->id)->select();
         foreach ($data as $k=>$v){
-            $v->time_str=date('Y-h-d m:s:i',$v->time);
+            $v->time_str=date('Y-m-d H:i:s',$v->time);
         }
         $this->success(__('成功'),$data);
 
@@ -267,7 +267,7 @@ class Index extends Api
             $query->field('username');
         }])->where('user_id',$this->auth->id)->select();
         foreach ($data as $k=>$v){
-            $v->time_str=date('Y-h-d m:s:i',$v->time);
+            $v->time_str=date('Y-m-d H:i:s',$v->time);
         }
         $this->success(__('成功'),$data);
 
@@ -277,7 +277,7 @@ class Index extends Api
         $data=Userloginlog::where('user_id',$this->auth->id)->select();
 
         foreach ($data as $k=>$v){
-            $v->time_str=date('Y-h-d m:s:i',$v->time);
+            $v->time_str=date('Y-m-d H:i:s',$v->time);
         }
         $this->success(__('成功'),$data);
     }
@@ -285,7 +285,7 @@ class Index extends Api
     public function fund(){
         $data=  Db::name('user_money_log')->where('user_id',$this->auth->id)->select();
         foreach ($data as $k=>$v){
-            $data[$k]['createtime_str']=date('Y-h-d m:s:i',$v['createtime']);
+            $data[$k]['createtime_str']=date('Y-m-d H:i:s',$v['createtime']);
         }
         $this->success(__('成功'),$data);
     }
@@ -302,8 +302,8 @@ class Index extends Api
     public function order(){
         $data=Order::where('user_id',$this->auth->id)->select();
         foreach ($data as $k=>$v){
-            $v->time_str=date('Y-h-d m:s:i',$v->time);
-            $v->submit_time_str=date('Y-h-d m:s:i',$v->submit_time);
+            $v->time_str=date('Y-m-d H:i:s',$v->time);
+            $v->submit_time_str=date('Y-m-d H:i:s',$v->submit_time);
             if($v->state ==1){
                 $v->state_str='待审核';
             }else if($v->state ==2){
