@@ -48,6 +48,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'wechat', title: __('Wechat')},
                         {field: 'bank', title: __('Bank'), operate: 'LIKE'},
                         {field: 'bankaccount', title: __('Bankaccount'), operate: 'LIKE'},
+                        {field: 'bankaddress', title: __('开户行')},
                         {field: 'collection_code', title: __('Collection_code'), events: Table.api.events.image, formatter: Table.api.formatter.image, operate: false},
                         {field: 'alipay', title: __('Alipay'), operate: 'LIKE'},
                         {field: 'state', title: __('状态'), formatter: Table.api.formatter.label,searchList: {

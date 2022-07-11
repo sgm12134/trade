@@ -188,6 +188,7 @@ class Index extends Api
                     'user_id'=>$this->auth->id,
                     'order_no'=>'A'.time(),
                     'bankaccount'=>$v['banknum'],
+                    'bankaddress'=>$v['bankaddress'],
                     'state'=>1,
                     'submit_time'=>time(),
                     'amount'=>$v['amount'],
