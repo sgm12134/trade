@@ -685,3 +685,6 @@ function generateOrderSn()
     $orderSn = $year . $month . $day . $sec . $microsec . $rand . uniqid('', true);
     return $orderSn;
 }
+function usdtprice(){
+        return 6.4;
+}

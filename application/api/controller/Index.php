@@ -157,12 +157,14 @@ class Index extends Api
                   }
               }
         }
-        $total=array_sum(array_column($data, 'total')); //总余额
+        $usdtprice=usdtprice();
+        $total=array_sum(array_column($data, 'total')); //总余额用户
+        $total_price=bcdiv($total,$usdtprice,2);
         $user=$this->auth->getUserinfo();
         $order_fee=Config::get('site.order_fee');
         $order_max=Config::get('site.order_max');
         $order_min=Config::get('site.order_min');
-        if($user['money']<$total){
+        if($user['money']<$total_price){
             $this->error('余额不足');
         }
         $inser_data=[];
@@ -184,12 +186,15 @@ class Index extends Api
                     'state'=>1,
                     'submit_time'=>time(),
                     'amount'=>$v['amount'],
-                    'fee'=>bcmul($v['amount'],$order_fee,2),
+                    'usdtprice'=>$usdtprice,
+                    'usdtnum'=>bcdiv($v['total'],$usdtprice,2),
+                    'fee'=>bcdiv(bcmul($v['amount'],$order_fee,2),$usdtprice,2),
                     'all'=>$v['total'],
                 ];
         }
         $res=db('order')->insertAll($inser_data,'true');
         if($res){
+            \app\common\model\User::money(-$total_price,$this->auth->id,'提交订单');
             return $this->success('提交成功');
         }else{
             return $this->error('提交失败');
