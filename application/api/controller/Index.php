@@ -179,7 +179,7 @@ class Index extends Api
             if($v['amount']>$order_max){
                 $this->error('请正确提交订单');
             }
-            if($type =='银行卡')
+            if($type =='银行卡'){
                 sleep(1);
                 $inser_data[]=[
                     'pay_way'=>1,//银行卡
@@ -197,6 +197,44 @@ class Index extends Api
                     'all'=>$v['total'],//人民币总额
                     'allusdt'=>bcdiv($v['total'],$usdtprice,2),//usdt 总额
                 ];
+            }else if($type =='微信'){
+                sleep(1);
+                $inser_data[]=[
+                    'pay_way'=>2,//微信
+                    'username'=>$v['name'],
+                    'wechat'=>$v['zwname'],
+                    'user_id'=>$this->auth->id,
+                    'order_no'=>'A'.time(),
+                    'collection_code'=>$v['imgurl'],
+                    'state'=>1,
+                    'submit_time'=>time(),
+                    'amount'=>$v['amount'],
+                    'usdtnum'=>bcdiv($v['amount'],$usdtprice,2),
+                    'usdtprice'=>$usdtprice,
+                    'fee'=>bcdiv(bcmul($v['amount'],$order_fee,2),$usdtprice,2),
+                    'all'=>$v['total'],//人民币总额
+                    'allusdt'=>bcdiv($v['total'],$usdtprice,2),//usdt 总额
+                ];
+            }
+        else if($type =='支付宝'){
+                sleep(1);
+                $inser_data[]=[
+                    'pay_way'=>3,//微信
+                    'username'=>$v['name'],
+                    'alipay'=>$v['zwname'],
+                    'user_id'=>$this->auth->id,
+                    'order_no'=>'A'.time(),
+                    'collection_code'=>$v['imgurl'],
+                    'state'=>1,
+                    'submit_time'=>time(),
+                    'amount'=>$v['amount'],
+                    'usdtnum'=>bcdiv($v['amount'],$usdtprice,2),
+                    'usdtprice'=>$usdtprice,
+                    'fee'=>bcdiv(bcmul($v['amount'],$order_fee,2),$usdtprice,2),
+                    'all'=>$v['total'],//人民币总额
+                    'allusdt'=>bcdiv($v['total'],$usdtprice,2),//usdt 总额
+                ];
+            }
         }
         $res=db('order')->insertAll($inser_data,'true');
         if($res){
@@ -259,5 +297,14 @@ class Index extends Api
     public function bank(){
         $bank=  Db::name('bank')->where('state',1)->select();
         $this->success(__('成功'),$bank);
+    }
+
+    public function order(){
+        $data=Order::where('user_id',$this->auth->id)->select();
+        foreach ($data as $k=>$v){
+            $v->time_str=date('Y-h-d m:s:i',$v->time);
+            $v->submit_time_str=date('Y-h-d m:s:i',$v->submit_time);
+        }
+        $this->success(__('成功'),$data);
     }
 }
