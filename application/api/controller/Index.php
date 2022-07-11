@@ -106,20 +106,20 @@ class Index extends Api
             }
             $ret = \app\common\library\Sms::check($account, $code, 'tx');
             if (!$ret) {
-                $this->error(__('Captcha is incorrect'));
+                $this->error(__('验证码错误'));
             }
             \app\common\library\Sms::flush($account, 'tx');
         } else {
             if (!Validate::is($account, "email")) {
-                $this->error(__('Email is incorrect'));
+                $this->error(__('邮箱格式错误'));
             }
             $user = \app\common\model\User::getByEmail($account);
             if (!$user) {
-                $this->error(__('User not found'));
+                $this->error(__('用户不存在'));
             }
             $ret = \app\common\library\Ems::check($account, $code, 'tx');
             if (!$ret) {
-                $this->error(__('Captcha is incorrect'));
+                $this->error(__('验证码错误'));
             }
             \app\common\library\Ems::flush($account, 'tx');
         }
@@ -185,6 +185,7 @@ class Index extends Api
                     'pay_way'=>1,//银行卡
                     'username'=>$v['name'],
                     'bank'=>$v['bank'],
+                    'user_id'=>$this->auth->id,
                     'order_no'=>'A'.time(),
                     'bankaccount'=>$v['banknum'],
                     'state'=>1,

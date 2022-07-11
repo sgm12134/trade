@@ -29,6 +29,13 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {checkbox: true},
                         {field: 'id', title: __('Id')},
                         {field: 'order_no', title: __('Order_no'), operate: 'LIKE'},
+
+                        {field: 'usdtnum', title: __('代付USDT数量')},
+                        {field: 'amount', title: __('代付人民币金额')},
+                        {field: 'all', title: __('人民币总金额')},
+                        {field: 'allusdt', title: __('USDT总金额')},
+                        {field: 'fee', title: __('手续费USDT')},
+                        {field: 'usdtprice', title: __('Usdtprice')},
                         {field: 'state', title: __('Pay_way'), formatter: Table.api.formatter.label,searchList: {
                                 1:'银行卡',
                                 2:'微信',
@@ -36,8 +43,9 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                             }},
 
 
-                        {field: 'username', title: __('Username'), operate: 'LIKE'},
-                        {field: 'wechat', title: __('Wechat'), operate: 'LIKE'},
+                        {field: 'user.username', title: __('提交人'), operate: 'LIKE'},
+                        {field: 'username', title: __('Username')},
+                        {field: 'wechat', title: __('Wechat')},
                         {field: 'bank', title: __('Bank'), operate: 'LIKE'},
                         {field: 'bankaccount', title: __('Bankaccount'), operate: 'LIKE'},
                         {field: 'collection_code', title: __('Collection_code'), events: Table.api.events.image, formatter: Table.api.formatter.image, operate: false},
@@ -48,12 +56,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                                 3:'拒绝',
                             }},
 
-                        {field: 'usdtnum', title: __('代付USDT数量')},
-                        {field: 'amount', title: __('代付人民币金额')},
-                        {field: 'all', title: __('人民币总金额')},
-                        {field: 'allusdt', title: __('USDT总金额')},
-                        {field: 'fee', title: __('手续费USDT')},
-                        {field: 'usdtprice', title: __('Usdtprice')},
+
                         {field: 'submit_time', title: __('Submit_time'), operate:'RANGE', addclass:'datetimerange', autocomplete:false, formatter: Table.api.formatter.datetime},
                         {field: 'time', title: __('Time'), operate:'RANGE', addclass:'datetimerange', autocomplete:false, formatter: Table.api.formatter.datetime},
                         {field: 'remark', title: __('Remark'), operate: 'LIKE'},
@@ -65,7 +68,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                                     text: __('同意'),
                                     icon: 'fa fa-check',
                                     classname: 'btn btn-xs btn-success btn-magic btn-ajax',
-                                    url: 'recharge/agree',
+                                    url: 'order/agree',
                                     confirm: '你确定要同意吗?',
                                     success:function(){
                                         table.bootstrapTable('refresh', {});
@@ -85,7 +88,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                                     title: __('拒绝'),
                                     classname: 'btn btn-xs btn-primary btn-dialog',
                                     icon: 'fa fa-close',
-                                    url: 'recharge/refuse',
+                                    url: 'order/refuse',
                                     callback: function (data) {
 
                                     },
