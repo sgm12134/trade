@@ -9,6 +9,7 @@ use app\admin\model\Userloginlog;
 use app\common\controller\Api;
 use think\Config;
 use think\Db;
+use think\Validate;
 
 /**
  * 首页接口
@@ -66,6 +67,9 @@ class Index extends Api
         $amount = $this->request->param('amount');
         $address= $this->request->param('address');
         $remark= $this->request->param('remark');
+        $type= $this->request->param('type');
+        $account= $this->request->param('account');
+        $code= $this->request->param('code');
         $pay_password= $this->request->param('pay_password');
         if(empty($pay_password)){
             $this->error(__('支付密码不能为空'));
@@ -86,6 +90,34 @@ class Index extends Api
         $tx_count=Db::name('tx') ->where('user_id',$this->auth->id)->whereTime('time', 'today')->count();
         if($tx_count>=$tx_times){
             $this->error('今日提现次数已满');
+        }
+
+        if ($type == 'mobile') {
+            if (!Validate::regex($account, "^1\d{10}$")) {
+                $this->error(__('Mobile is incorrect'));
+            }
+            $user = \app\common\model\User::getByMobile($account);
+            if (!$user) {
+                $this->error(__('User not found'));
+            }
+            $ret = Sms::check($account, $code, 'resetpwd');
+            if (!$ret) {
+                $this->error(__('Captcha is incorrect'));
+            }
+            Sms::flush($account, 'tx');
+        } else {
+            if (!Validate::is($account, "email")) {
+                $this->error(__('Email is incorrect'));
+            }
+            $user = \app\common\model\User::getByEmail($account);
+            if (!$user) {
+                $this->error(__('User not found'));
+            }
+            $ret = Ems::check($account, $code, 'resetpwd');
+            if (!$ret) {
+                $this->error(__('Captcha is incorrect'));
+            }
+            Ems::flush($account, 'tx');
         }
         $user=$this->auth->getUser();
         if(empty($user['pay_password'])){
