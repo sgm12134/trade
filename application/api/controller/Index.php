@@ -74,7 +74,7 @@ class Index extends Api
         if(empty($pay_password)){
             $this->error(__('支付密码不能为空'));
         }
-        if(empty($type)){
+        if(empty($type) || empty($account) || empty($code)){
             $this->error(__('参数不能为空'));
         }
         $tx_min=Config::get('site.tx_min');
