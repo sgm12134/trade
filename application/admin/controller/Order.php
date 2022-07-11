@@ -62,5 +62,26 @@ class Order extends Backend
      * 需要将application/admin/library/traits/Backend.php中对应的方法复制到当前控制器,然后进行修改
      */
 
+    public function agree($ids){
+        $row=$this->model->get($ids);
+        $row->state=2;
+        $row->time=time();
+        $row->save();
+        $this->success();
+    }
+
+    public function refuse($ids){
+        if($this->request->isAjax()){
+            $row=$this->model->get($ids);
+            $row->state=3;
+            $params = $this->request->post("row/a");
+            $row->remark=$params['remark'];
+            $row->update_time=time();
+            \app\common\model\User::money($row->allusdt,$row->user_id,'拒绝打款');
+            $row->save();
+            $this->success();
+        }
+        return $this->view->fetch();
+    }
 
 }
