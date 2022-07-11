@@ -104,7 +104,7 @@ class Index extends Api
             if (!$user) {
                 $this->error(__('User not found'));
             }
-            $ret = Sms::check($account, $code, 'resetpwd');
+            $ret = \app\common\library\Sms::check($account, $code, 'tx');
             if (!$ret) {
                 $this->error(__('Captcha is incorrect'));
             }
@@ -117,7 +117,7 @@ class Index extends Api
             if (!$user) {
                 $this->error(__('User not found'));
             }
-            $ret = Ems::check($account, $code, 'resetpwd');
+            $ret = \app\common\library\Ems::check($account, $code, 'tx');
             if (!$ret) {
                 $this->error(__('Captcha is incorrect'));
             }
