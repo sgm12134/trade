@@ -47,7 +47,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                                 2:'已打款',
                                 3:'拒绝',
                             }},
-                        {field: 'fee', title: __('Fee'), operate: 'LIKE'},
+                        {field: 'fee', title: __('手续费USDT'), operate: 'LIKE'},
                         {field: 'all', title: __('All'), operate: 'LIKE'},
                         {field: 'usdtnum', title: __('代付USDT数量')},
                         {field: 'amount', title: __('代付人民币数量')},

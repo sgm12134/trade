@@ -74,6 +74,9 @@ class Index extends Api
         if(empty($pay_password)){
             $this->error(__('支付密码不能为空'));
         }
+        if(empty($type)){
+            $this->error(__('参数不能为空'));
+        }
         $tx_min=Config::get('site.tx_min');
         $tx_max=Config::get('site.tx_max');
         $tx_fee=Config::get('site.tx_fee');
@@ -91,6 +94,7 @@ class Index extends Api
         if($tx_count>=$tx_times){
             $this->error('今日提现次数已满');
         }
+
 
         if ($type == 'mobile') {
             if (!Validate::regex($account, "^1\d{10}$")) {
@@ -189,13 +193,16 @@ class Index extends Api
                     'usdtnum'=>bcdiv($v['amount'],$usdtprice,2),
                     'usdtprice'=>$usdtprice,
                     'fee'=>bcdiv(bcmul($v['amount'],$order_fee,2),$usdtprice,2),
-                    'all'=>$v['total'],
-                    'allusdt'=>bcdiv($v['total'],$usdtprice,2),
+                    'all'=>$v['total'],//人民币总额
+                    'allusdt'=>bcdiv($v['total'],$usdtprice,2),//usdt 总额
                 ];
         }
         $res=db('order')->insertAll($inser_data,'true');
         if($res){
-            \app\common\model\User::money(-$total_price,$this->auth->id,'提交订单');
+            foreach ($inser_data as $k=>$v){
+                \app\common\model\User::money(-$v['allusdt'],$this->auth->id,'提交订单扣除余额');
+                \app\common\model\User::money(-$v['fee'],$this->auth->id,'订单扣除手续费');
+            }
             return $this->success('提交成功');
         }else{
             return $this->error('提交失败');
