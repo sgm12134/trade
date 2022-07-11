@@ -186,10 +186,11 @@ class Index extends Api
                     'state'=>1,
                     'submit_time'=>time(),
                     'amount'=>$v['amount'],
+                    'usdtnum'=>bcdiv($v['amount'],$usdtprice,2),
                     'usdtprice'=>$usdtprice,
-                    'usdtnum'=>bcdiv($v['total'],$usdtprice,2),
                     'fee'=>bcdiv(bcmul($v['amount'],$order_fee,2),$usdtprice,2),
                     'all'=>$v['total'],
+                    'allusdt'=>bcdiv($v['total'],$usdtprice,2),
                 ];
         }
         $res=db('order')->insertAll($inser_data,'true');
