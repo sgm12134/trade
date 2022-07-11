@@ -101,8 +101,8 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
         },
         agree: function () {
             Controller.api.bindevent();
-        }
-        , refuse: function () {
+        },
+        refuse: function () {
             Controller.api.bindevent();
         },
         api: {
