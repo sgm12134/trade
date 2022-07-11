@@ -32,7 +32,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
 
                         {field: 'usdtnum', title: __('代付USDT数量')},
                         {field: 'amount', title: __('代付人民币金额')},
-                        {field: 'all', title: __('人民币总金额')},
+                        // {field: 'all', title: __('人民币总金额')},
                         {field: 'allusdt', title: __('USDT总金额')},
                         {field: 'fee', title: __('手续费USDT')},
                         {field: 'usdtprice', title: __('Usdtprice')},
