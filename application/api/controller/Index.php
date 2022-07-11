@@ -108,7 +108,7 @@ class Index extends Api
             if (!$ret) {
                 $this->error(__('Captcha is incorrect'));
             }
-            Sms::flush($account, 'tx');
+            \app\common\library\Sms::flush($account, 'tx');
         } else {
             if (!Validate::is($account, "email")) {
                 $this->error(__('Email is incorrect'));
@@ -121,7 +121,7 @@ class Index extends Api
             if (!$ret) {
                 $this->error(__('Captcha is incorrect'));
             }
-            Ems::flush($account, 'tx');
+            \app\common\library\Ems::flush($account, 'tx');
         }
         $user=$this->auth->getUser();
         if(empty($user['pay_password'])){
