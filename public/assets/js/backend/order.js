@@ -72,14 +72,12 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                                     classname: 'btn btn-xs btn-success btn-magic btn-dialog',
                                     url: 'order/agree',
                                     callback: function (data) {
-                                        Layer.alert("接收到回传数据：" + JSON.stringify(data), {title: "回传数据"});
                                         table.bootstrapTable('refresh', {});
                                         return true;
                                     },
 
                                     visible:function (data) {
-                                        if(data.state ==2 ){
-
+                                        if(data.state ==2 || data.state ==1 ){
                                             return  true
                                         }else{
                                             return  false
@@ -95,7 +93,6 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                                     icon: 'fa fa-check',
                                     url: 'order/entrust',
                                     callback :function(){
-                                        Layer.alert("接收到回传数据：" + JSON.stringify(data), {title: "回传数据"});
                                         table.bootstrapTable('refresh', {});
                                     },
 
@@ -119,7 +116,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                                         return true;
                                     },
                                     visible:function (data) {
-                                        if(data.state ==2){
+                                        if(data.state ==2 || data.state ==1){
                                             return  true
                                         }else{
                                             return  false
