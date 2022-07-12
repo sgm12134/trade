@@ -1,5 +1,3 @@
-import ro from "../../libs/moment/dist/locale/ro";
-
 define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefined, Backend, Table, Form) {
 
     var Controller = {
@@ -41,13 +39,13 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         
                         {field: 'ccounts', title: __('收款账户'), operate: false,formatter: function (value,row,index) {
                             if(row.pay_way ==1){
-                                return  row.bankaccount;
-                            }else if(row.pay_way==2){
-                                return  row.wechat;
-                            }else {
-                                return row.alipay;
-                            }
+                                return  row.bankaccount
+                            }else if(row.pay_way ==2){
+                                return row.wechat;
 
+                            }else {
+                                return row.alipay
+                            }
 
                             }},
 
