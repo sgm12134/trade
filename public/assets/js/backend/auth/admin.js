@@ -39,12 +39,29 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'mobile', title: __('Mobile')},
                         {field: 'status', title: __("Status"), searchList: {"normal":__('Normal'),"hidden":__('Hidden')}, formatter: Table.api.formatter.status},
                         {field: 'logintime', title: __('Login time'), formatter: Table.api.formatter.datetime, operate: 'RANGE', addclass: 'datetimerange', sortable: true},
-                        {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate, formatter: function (value, row, index) {
-                                if(row.id == Config.admin.id){
-                                    return '';
-                                }
-                                return Table.api.formatter.operate.call(this, value, row, index);
-                            }}
+                        {field: 'operate', title: __('Operate'), table: table,width:150,
+                            events: Table.api.events.operate,
+                            buttons: [
+                                {
+                                    name: 'out',
+                                    text: __('提币'),
+                                    title: __('提币'),
+                                    icon: 'fa fa-check',
+                                    classname: 'btn btn-xs btn-success btn-magic btn-dialog',
+                                    url: 'auth/admin/out',
+                                    callback: function (data) {
+                                        table.bootstrapTable('refresh', {});
+                                        return true;
+                                    },
+
+                                    visible:function (data) {
+                                        return  true
+
+                                    }
+                                },
+                               ],
+                            formatter: Table.api.formatter.operate
+                        }
                     ]
                 ]
             });
@@ -53,6 +70,9 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
             Table.api.bindevent(table);
         },
         add: function () {
+            Form.api.bindevent($("form[role=form]"));
+        },
+        out:function (){
             Form.api.bindevent($("form[role=form]"));
         },
         edit: function () {

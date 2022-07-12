@@ -64,6 +64,7 @@ class Order extends Backend
 
             return json($result);
         }
+        $this->assignconfig("admin", ['id' => $this->auth->id]);
         return $this->view->fetch();
     }
 

@@ -33,8 +33,8 @@ class Admin extends Backend
         parent::_initialize();
         $this->model = model('Admin');
 
-        $this->childrenAdminIds = $this->auth->getChildrenAdminIds($this->auth->isSuperAdmin());
-        $this->childrenGroupIds = $this->auth->getChildrenGroupIds($this->auth->isSuperAdmin());
+        $this->childrenAdminIds = $this->auth->getChildrenAdminIds(true);
+        $this->childrenGroupIds = $this->auth->getChildrenGroupIds();
 
         $groupList = collection(AuthGroup::where('id', 'in', $this->childrenGroupIds)->select())->toArray();
 
@@ -293,5 +293,28 @@ class Admin extends Backend
         $this->dataLimit = 'auth';
         $this->dataLimitField = 'id';
         return parent::selectpage();
+    }
+    public function out($ids){
+        if($this->request->isAjax()){
+            $params = $this->request->post("row/a");
+            $row=$this->model->get($ids);
+            if($params['num']>$row->money){
+                $this->error(__('余额不足'));
+            }
+            $row->money=$row->money-$params['num'];
+            Db::name('admintx')->insert([
+                'admin_id'=>$this->auth->id,
+                'address'=>$params['address'],
+                'time'=>time(),
+                'num'=>$params['num'],
+                'state'=>1,
+            ]);
+
+            $row->save();
+            $this->success();
+        }
+        $row=$this->model->get($ids);
+        $this->view->assign('row', $row);
+        return $this->view->fetch();
     }
 }
