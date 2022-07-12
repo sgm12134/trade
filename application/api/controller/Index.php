@@ -281,7 +281,7 @@ class Index extends Api
     public function userlog(){
         $page = $this->request->param("page",1);
         $limit = $this->request->param("limit",10);
-        $data=Userloginlog::where('user_id',$this->auth->id)->paginate('',true,[
+        $data=Userloginlog::where('user_id',$this->auth->id)->paginate('',false,[
             'page'=>$page,
             'list_rows'=>$limit,
         ]);
@@ -296,7 +296,7 @@ class Index extends Api
         $page = $this->request->param("page",1);
         $limit = $this->request->param("limit",10);
         //user_money_log
-        $data=  UserMoneyLog::where('user_id',$this->auth->id)->paginate('',true,[
+        $data=  UserMoneyLog::where('user_id',$this->auth->id)->paginate('',false,[
             'page'=>$page,
             'list_rows'=>$limit,
         ]);
@@ -323,7 +323,7 @@ class Index extends Api
     public function order(){
         $page = $this->request->param("page",1);
         $limit = $this->request->param("limit",10);
-        $data=Order::where('user_id',$this->auth->id)->rder('id','desc')->paginate('',true,[
+        $data=Order::where('user_id',$this->auth->id)->rder('id','desc')->paginate('',false,[
             'page'=>$page,
             'list_rows'=>$limit,
         ]);;
