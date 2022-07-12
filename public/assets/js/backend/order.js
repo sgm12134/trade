@@ -26,7 +26,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 fixedRightNumber: 1,
                 columns: [
                     [
-                        {checkbox: true},
+                        // {checkbox: true},
                         // {field: 'id', title: __('Id')},
                         {field: 'user.username', title: __('用户'), operate: 'LIKE'},
                         {field: 'order_no', title: __('Order_no'), operate: 'LIKE'},
