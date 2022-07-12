@@ -7,6 +7,7 @@ use app\admin\model\Recharge;
 use app\admin\model\Tx;
 use app\admin\model\Userloginlog;
 use app\common\controller\Api;
+use app\common\model\UserMoneyLog;
 use think\Config;
 use think\Db;
 use think\Validate;
@@ -294,7 +295,8 @@ class Index extends Api
     public function fund(){
         $page = $this->request->param("page",1);
         $limit = $this->request->param("limit",10);
-        $data=  Db::name('user_money_log')->where('user_id',$this->auth->id)->paginate('',true,[
+        //user_money_log
+        $data=  UserMoneyLog::where('user_id',$this->auth->id)->paginate('',true,[
             'page'=>$page,
             'list_rows'=>$limit,
         ]);
