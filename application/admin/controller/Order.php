@@ -79,13 +79,13 @@ class Order extends Backend
         if($this->request->isAjax()){
         $row=$this->model->get($ids);
         $params = $this->request->post("row/a");
-        if($row->state !=2){
-            $this->error('这个状态不能操作');
-        }
-        $row->state=3;
-        if(empty($row->admin_id)){
-            $this->error('未分配打款员不能操作');
-        }
+//        if($row->state !=2){
+//            $this->error('这个状态不能操作');
+//        }
+//        $row->state=3;
+//        if(empty($row->admin_id)){
+//            $this->error('未分配打款员不能操作');
+//        }
         $row->time=time();
         $row->payment_voucher=$params['payment_voucher'];
         $is_sms=0;
@@ -112,12 +112,12 @@ class Order extends Backend
     public function entrust($ids){
         if($this->request->isAjax()){
             $row=$this->model->get($ids);
-            if(!empty($row->admin_id)){
-                $this->error('不能重复分配');
-            }
-            if($row->state!=1){
-                $this->error('这个状态不能操作');
-            }
+//            if(!empty($row->admin_id)){
+//                $this->error('不能重复分配');
+//            }
+//            if($row->state!=1){
+//                $this->error('这个状态不能操作');
+//            }
             $params = $this->request->post("row/a");
             $row->admin_id=$params['admin_id'];
             $row->state=2;
@@ -146,9 +146,9 @@ class Order extends Backend
     public function refuse($ids){
         if($this->request->isAjax()){
             $row=$this->model->get($ids);
-            if($row->state !=2){
-                $this->error('这个状态不能操作');
-            }
+//            if($row->state !=2){
+//                $this->error('这个状态不能操作');
+//            }
             $row->state=4;
             $params = $this->request->post("row/a");
             $row->remark=$params['remark'];
