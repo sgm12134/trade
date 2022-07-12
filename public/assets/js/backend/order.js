@@ -66,8 +66,8 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                             buttons: [
                                 {
                                     name: 'agree',
-                                    text: __('同意'),
-                                    title: __('同意'),
+                                    text: __('已付款'),
+                                    title: __('已付款'),
                                     icon: 'fa fa-check',
                                     classname: 'btn btn-xs btn-success btn-magic btn-dialog',
                                     url: 'order/agree',
@@ -106,8 +106,8 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                                 },
                                 {
                                     name: 'refuse',
-                                    text: __('拒绝'),
-                                    title: __('拒绝'),
+                                    text: __('下发失败'),
+                                    title: __('下发失败'),
                                     classname: 'btn btn-xs btn-primary  btn-magic btn-dialog',
                                     icon: 'fa fa-close',
                                     url: 'order/refuse',
