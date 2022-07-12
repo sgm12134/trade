@@ -127,7 +127,7 @@ var requirejs, require, define, xpcUtil;
         };
 
         exists = function () {
-            console.log('x.js exists not applicable in browser env');
+            console.log('x.js exists not applicable in browser .env');
             return false;
         };
 
@@ -2652,7 +2652,7 @@ var requirejs, require, define, xpcUtil;
   document: false, define: false */
 
 /**
- * A plugin that modifies any /env/ path to be the right path based on
+ * A plugin that modifies any /.env/ path to be the right path based on
  * the host environment. Right now only works for Node, Rhino and browser.
  */
 (function () {
@@ -4414,7 +4414,7 @@ define('xpconnect/print', function () {
 /*jslint nomen: false, strict: false */
 /*global define: false */
 
-define('logger', ['env!env/print'], function (print) {
+define('logger', ['.env!.env/print'], function (print) {
     var logger = {
         TRACE: 0,
         INFO: 1,
@@ -4464,7 +4464,7 @@ define('logger', ['env!env/print'], function (print) {
     return logger;
 });
 //Just a blank file to use when building the optimizer with the optimizer,
-//so that the build does not attempt to inline some env modules,
+//so that the build does not attempt to inline some .env modules,
 //like Node's fs and path.
 
 /*
@@ -10215,7 +10215,7 @@ define('logger', ['env!env/print'], function (print) {
  * quickly. So favor it built in Reflect parser:
  * https://developer.mozilla.org/en-US/docs/SpiderMonkey/Parser_API
  */
-define('esprimaAdapter', ['./esprima', 'env'], function (esprima, env) {
+define('esprimaAdapter', ['./esprima', '.env'], function (esprima, env) {
     if (env.get() === 'xpconnect' && typeof Reflect !== 'undefined') {
         return Reflect;
     } else {
@@ -13279,7 +13279,7 @@ return /******/ (function(modules) { // webpackBootstrap
 });
 ;//Distributed under the BSD license:
 //Copyright 2012 (c) Mihai Bazon <mihai.bazon@gmail.com>
-define('uglifyjs', ['exports', 'source-map', 'logger', 'env!env/file'], function (exports, MOZ_SourceMap, logger, rjsFile) {
+define('uglifyjs', ['exports', 'source-map', 'logger', '.env!.env/file'], function (exports, MOZ_SourceMap, logger, rjsFile) {
 
 /***********************************************************************
 
@@ -24297,7 +24297,7 @@ if(env === 'rhino') {
 /*jslint sloppy: true, plusplus: true */
 /*global define, java, Packages, com */
 
-define('rhino/optimize', ['logger', 'env!env/file'], function (logger, file) {
+define('rhino/optimize', ['logger', '.env!.env/file'], function (logger, file) {
 
     //Add .reduce to Rhino so UglifyJS can run in Rhino,
     //inspired by https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/reduce
@@ -24488,7 +24488,7 @@ define('xpconnect/optimize', {});
 /*jslint plusplus: true, nomen: true, regexp: true */
 /*global define: false */
 
-define('optimize', [ 'lang', 'logger', 'env!env/optimize', 'env!env/file', 'parse',
+define('optimize', [ 'lang', 'logger', '.env!.env/optimize', '.env!.env/file', 'parse',
          'pragma', 'uglifyjs',
          'source-map'],
 function (lang,   logger,   envOptimize,        file,           parse,
@@ -24967,7 +24967,7 @@ function (lang,   logger,   envOptimize,        file,           parse,
 
 //NOT asking for require as a dependency since the goal is to modify the
 //global require below
-define('requirePatch', [ 'env!env/file', 'pragma', 'parse', 'lang', 'logger', 'commonJs', 'prim'], function (
+define('requirePatch', [ '.env!.env/file', 'pragma', 'parse', 'lang', 'logger', 'commonJs', 'prim'], function (
     file,
     pragma,
     parse,
@@ -25480,7 +25480,7 @@ define('requirePatch', [ 'env!env/file', 'pragma', 'parse', 'lang', 'logger', 'c
 /*jslint */
 /*global define: false, console: false */
 
-define('commonJs', ['env!env/file', 'parse'], function (file, parse) {
+define('commonJs', ['.env!.env/file', 'parse'], function (file, parse) {
     'use strict';
     var commonJs = {
         //Set to false if you do not want this file to log. Useful in environments
@@ -25586,13 +25586,13 @@ define('build', function (require) {
         lang = require('lang'),
         prim = require('prim'),
         logger = require('logger'),
-        file = require('env!env/file'),
+        file = require('.env!.env/file'),
         parse = require('parse'),
         optimize = require('optimize'),
         pragma = require('pragma'),
         transform = require('transform'),
         requirePatch = require('requirePatch'),
-        env = require('env'),
+        env = require('.env'),
         commonJs = require('commonJs'),
         SourceMapGenerator = require('source-map').SourceMapGenerator,
         hasProp = lang.hasProp,
@@ -27200,7 +27200,7 @@ define('build', function (require) {
      *
      * @param {Object} module the module object from the build config info.
      * @param {Object} config the build config object.
-     * @param {Object} [baseLoaderConfig] the base loader config to use for env resets.
+     * @param {Object} [baseLoaderConfig] the base loader config to use for .env resets.
      *
      * @returns {Object} layerobj information about what paths and modules should
      * be in the flattened module.
@@ -27287,7 +27287,7 @@ define('build', function (require) {
         //Figure out module layerobj dependencies by calling require to do the work.
         require(include, includeFinished, deferred.reject);
 
-        // If a sync env, then with the "two IDs to same anon module path"
+        // If a sync .env, then with the "two IDs to same anon module path"
         // issue, the require never completes, need to check for errors
         // here.
         if (syncChecks[env.get()]) {
@@ -27832,7 +27832,7 @@ define('build', function (require) {
 
             requirejs({
                 context: 'build'
-            }, ['build', 'logger', 'env!env/quit'], runBuild);
+            }, ['build', 'logger', '.env!.env/quit'], runBuild);
         };
 
         requirejs.tools = {
@@ -27905,7 +27905,7 @@ require({
     catchError: {
         define: true
     }
-},       ['env!env/args', 'env!env/quit', 'logger', 'build'],
+},       ['.env!.env/args', '.env!.env/quit', 'logger', 'build'],
 function (args, quit, logger, build) {
     build(args).then(function () {}, function (err) {
         logger.error(err);
@@ -27921,7 +27921,7 @@ function (args, quit, logger, build) {
     } else if (commandOption === 'convert') {
         loadLib();
 
-        this.requirejsVars.require(['env!env/args', 'commonJs', 'env!env/print'],
+        this.requirejsVars.require(['.env!.env/args', 'commonJs', '.env!.env/print'],
             function (args, commonJs, print) {
 
                 var srcDir, outDir;

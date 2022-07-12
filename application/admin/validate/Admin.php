@@ -12,7 +12,6 @@ class Admin extends Validate
      */
     protected $rule = [
         'username' => 'require|regex:\w{3,30}|unique:admin',
-        'nickname' => 'require',
         'password' => 'require|regex:\S{32}',
         'email'    => 'require|email|unique:admin,email',
         'mobile'   => 'regex:1[3-9]\d{9}|unique:admin,mobile',
@@ -34,15 +33,14 @@ class Admin extends Validate
      * 验证场景
      */
     protected $scene = [
-        'add'  => ['username', 'email', 'nickname', 'password', 'mobile'],
-        'edit' => ['username', 'email', 'nickname', 'password', 'mobile'],
+        'add'  => ['username', 'email', 'password', 'mobile'],
+        'edit' => ['username', 'email', 'password', 'mobile'],
     ];
 
     public function __construct(array $rules = [], $message = [], $field = [])
     {
         $this->field = [
             'username' => __('Username'),
-            'nickname' => __('Nickname'),
             'password' => __('Password'),
             'email'    => __('Email'),
             'mobile'   => __('Mobile'),

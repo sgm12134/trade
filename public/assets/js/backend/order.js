@@ -36,32 +36,49 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                                 3:'支付宝',
                             }},
                         {field: 'username', title: __('收款人')},
-                        {field: 'bank', title: __('Bank'), operate: 'LIKE'},
-                        {field: 'bankaccount', title: __('Bankaccount'), operate: 'LIKE'},
-                        {field: 'bankaddress', title: __('开户行')},
-                        {field: 'usdtnum', title: __('代付USDT数量')},
-                        {field: 'amount', title: __('代付人民币金额')},
+                        
+                        {field: 'ccounts', title: __('收款账户'), operate: false,formatter: function (value,row,index) {
+                                return row.bankaccount+row.wechat+row.alipay;
+
+                            }},
+
+
+                        // {field: 'bankaccount', title: __('Bankaccount'), operate: 'LIKE'},
+                        {field: 'bankaddress', title: __('收款图/银行支行'),formatter: function (value,row,index) {
+                            if(row.pay_way !=1){
+                                return "<a href='javascript:void(0)' data-tips-image='"+value+"'><img src='"+row.collection_code+"' class='img-sm img-center' ></a>";
+                            }else {
+                                return  value
+                            }
+
+                            }},
+                        {field: 'payment_voucher', title: __('付款凭证'), events: Table.api.events.image, formatter: Table.api.formatter.image, operate: false},
+                        {field: 'amount', title: __('代付金额')},
+                        {field: 'usdtprice', title: __('实时u价')},
                         {field: 'allusdt', title: __('USDT总金额')},
-                        {field: 'usdtprice', title: __('实时价格')},
-                        {field: 'fee', title: __('U手续费')},
-                        {field: 'usdtprice', title: __('Usdtprice')},
+                        {field: 'fee', title: __('交易手续费')},
+                        {field: 'admin.username', title: __('委托打款'), operate: 'LIKE'},
+                        {field: 'entrust_money', title: __('委派佣金')},
+                        {field: 'order_transaction_profit', title: __('订单交易手续费')},
+
+                        {field: 'remark', title: __('Remark'), operate: 'LIKE'},
+
+                        // {field: 'usdtnum', title: __('代付USDT数量')},
+                        // {field: 'usdtprice', title: __('Usdtprice')},
                         {field: 'submit_time', title: __('Submit_time'), operate:'RANGE', addclass:'datetimerange', autocomplete:false, formatter: Table.api.formatter.datetime},
                         {field: 'time', title: __('Time'), operate:'RANGE', addclass:'datetimerange', autocomplete:false, formatter: Table.api.formatter.datetime},
-                        {field: 'payment_voucher', title: __('打款凭证'), events: Table.api.events.image, formatter: Table.api.formatter.image, operate: false},
-                        {field: 'admin.username', title: __('委托打款'), operate: 'LIKE'},
 
 
 
-                        {field: 'wechat', title: __('Wechat')},
-                        {field: 'alipay', title: __('Alipay'), operate: 'LIKE'},
-                        {field: 'collection_code', title: __('Collection_code'), events: Table.api.events.image, formatter: Table.api.formatter.image, operate: false},
+                        // {field: 'wechat', title: __('Wechat')},
+                        // {field: 'alipay', title: __('Alipay'), operate: 'LIKE'},
+                        // {field: 'collection_code', title: __('Collection_code'), events: Table.api.events.image, formatter: Table.api.formatter.image, operate: false},
                         {field: 'state', title: __('状态'), formatter: Table.api.formatter.label,searchList: {
                                 1:'待审核',
                                 2:'打款中',
                                 3:'已打款',
                                 4:'下发失败',
                             }},
-                        {field: 'remark', title: __('Remark'), operate: 'LIKE'},
                         {field: 'operate', title: __('Operate'), table: table,width:150,
                             events: Table.api.events.operate,
                             buttons: [
@@ -151,6 +168,10 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
         api: {
             bindevent: function () {
                 Form.api.bindevent($("form[role=form]"));
+            },
+            accounts: function (d) {
+                console.log(d)
+                return 111;
             }
         }
     };

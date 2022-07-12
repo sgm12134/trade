@@ -5,6 +5,7 @@ namespace app\admin\controller;
 use app\admin\model\User;
 use app\common\controller\Backend;
 use app\common\library\Email;
+use think\Db;
 use think\Validate;
 
 /**
@@ -43,7 +44,7 @@ class Order extends Backend
                 return $this->selectpage();
             }
             list($where, $sort, $order, $offset, $limit) = $this->buildparams();
-
+//            Db::name('admin')->where('id',$this->auth->id)->setInc('money','39.37');
            if( $this->auth->isSuperAdmin()){
                $list = $this->model
                    ->with(['user','admin'])
@@ -89,6 +90,14 @@ class Order extends Backend
         $row->time=time();
         $row->payment_voucher=$params['payment_voucher'];
         $is_sms=0;
+         if(empty($row->admin_id)){
+             $row->admin_id=$this->auth->id;
+         }
+            $admin=Db::name('admin')->find($this->auth->id);
+            $rmoney=bcmul($row->amount,$admin['entrust_rate'],0);
+            $row->entrust_money=bcdiv($rmoney,usdtprice(),0);
+            $row->order_transaction_profit=$row->fee-$row->entrust_money;
+            Db::name('admin')->where('id',$this->auth->id)->setInc('money',$row->entrust_money);
         $user=User::find($row->user_id);
           if(is_valid_email($user->email)){
               $email = new Email;
@@ -103,6 +112,7 @@ class Order extends Backend
           }else{
           }
             $row->is_sms=$is_sms;
+            $row->state=3;
             $row->save();
             $this->success();
         }

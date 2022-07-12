@@ -164,7 +164,7 @@ class Index extends Api
         }
         $usdtprice=usdtprice();
         $total=array_sum(array_column($data, 'total')); //总余额用户
-        $total_price=bcdiv($total,$usdtprice,2);
+        $total_price=bcdiv($total,$usdtprice,0);
         $user=$this->auth->getUserinfo();
         $order_fee=$rate=
         $order_max=Config::get('site.order_max');
@@ -195,12 +195,12 @@ class Index extends Api
                     'submit_time'=>time(),
                     'amount'=>$v['amount'],
                     'admin_id'=>0,
-                    'usdtnum'=>bcdiv($v['amount'],$usdtprice,2),
+                    'usdtnum'=>bcdiv($v['amount'],$usdtprice,0),
                     'usdtprice'=>$usdtprice,
-                    'fee'=>bcdiv(bcmul($v['amount'],Db::name('fee')->where('num','>=',$v['amount'])->order('id asc')->value('value'),2),$usdtprice,2),
+                    'fee'=>bcdiv(bcmul($v['amount'],Db::name('fee')->where('num','>=',$v['amount'])->order('id asc')->value('value'),0),$usdtprice,0),
                     'all'=>$v['total'],//人民币总额
 
-                    'allusdt'=>bcdiv($v['total'],$usdtprice,2),//usdt 总额
+                    'allusdt'=>bcdiv($v['total'],$usdtprice,0),//usdt 总额
                 ];
             }else if($type =='微信'){
                 sleep(1);
@@ -221,7 +221,7 @@ class Index extends Api
                     'fee'=>bcdiv(bcmul($v['amount'],Db::name('fee')->where('num','>=',$v['amount'])->order('id asc')->value('value'),2),$usdtprice,2),
 
                     'all'=>$v['total'],//人民币总额
-                    'allusdt'=>bcdiv($v['total'],$usdtprice,2),//usdt 总额
+                    'allusdt'=>bcdiv($v['total'],$usdtprice,0),//usdt 总额
                 ];
             }
         else if($type =='支付宝'){
@@ -238,11 +238,11 @@ class Index extends Api
                     'is_sms'=>0,
                     'submit_time'=>time(),
                     'amount'=>$v['amount'],
-                    'usdtnum'=>bcdiv($v['amount'],$usdtprice,2),
+                    'usdtnum'=>bcdiv($v['amount'],$usdtprice,0),
                     'usdtprice'=>$usdtprice,
-                    'fee'=>bcdiv(bcmul($v['amount'],Db::name('fee')->where('num','>=',$v['amount'])->order('id asc')->value('value'),2),$usdtprice,2),
+                    'fee'=>bcdiv(bcmul($v['amount'],Db::name('fee')->where('num','>=',$v['amount'])->order('id asc')->value('value'),0),$usdtprice,0),
                     'all'=>$v['total'],//人民币总额
-                    'allusdt'=>bcdiv($v['total'],$usdtprice,2),//usdt 总额
+                    'allusdt'=>bcdiv($v['total'],$usdtprice,0),//usdt 总额
                 ];
             }
         }
