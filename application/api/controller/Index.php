@@ -323,7 +323,7 @@ class Index extends Api
     public function order(){
         $page = $this->request->param("page",1);
         $limit = $this->request->param("limit",10);
-        $data=Order::where('user_id',$this->auth->id)->rder('id','desc')->paginate('',false,[
+        $data=Order::where('user_id',$this->auth->id)->order('id','desc')->paginate('',false,[
             'page'=>$page,
             'list_rows'=>$limit,
         ]);;
