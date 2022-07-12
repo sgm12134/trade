@@ -65,7 +65,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'usdtnum', title: __('USDT总金额')},
                         {field: 'fee', title: __('交易手续费'),visible: Config.admin.id == 1 ? true : false},
                         {field: 'admin.username', title: __('委托打款'), operate: 'LIKE'},
-                        {field: 'entrust_money', title: __('委派佣金')},
+                        {field: 'entrust_money', title: __('订单佣金')},
                         {field: 'order_transaction_profit', title: __('订单交易利润'),visible: Config.admin.id == 1 ? true : false},
                         {field: 'remark', title: __('Remark'), operate: 'LIKE'},
 
