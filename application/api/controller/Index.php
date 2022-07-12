@@ -322,6 +322,9 @@ class Index extends Api
     public function getfee(){
         $num=$this->request->param('num');
         $rate= Db::name('fee')->where('value','>=',$num)->order('id asc')->value('value');
+        if(empty($rate)){
+            $rate=0.01;
+        }
         $this->success(__('成功'),$rate);
 
     }
