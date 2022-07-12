@@ -1,7 +1,7 @@
 <?php
 
 return array (
-  'name' => '富力',
+  'name' => '富利',
   'beian' => '',
   'cdnurl' => '',
   'version' => '1.0.2',
@@ -29,12 +29,12 @@ return array (
     'example' => 'Example',
   ),
   'mail_type' => '1',
-  'mail_smtp_host' => 'smtp.qq.com',
+  'mail_smtp_host' => 'smtp.gmail.com',
   'mail_smtp_port' => '465',
-  'mail_smtp_user' => '10000',
-  'mail_smtp_pass' => 'password',
+  'mail_smtp_user' => '富力',
+  'mail_smtp_pass' => 'vlnmhgexjxixsjhu',
   'mail_verify_type' => '2',
-  'mail_from' => '10000@qq.com',
+  'mail_from' => 'fldf1688@gmail.com',
   'attachmentcategory' => 
   array (
     'category1' => 'Category1',
@@ -45,12 +45,12 @@ return array (
   'tx_max' => '',
   'recharge_min' => '1',
   'recharge_max' => '1111111',
-  'in_address' => '45454545454545455',
+  'in_address' => 'TVkX3tGMB8VPLCP916hWg74hmxi8YypT3K',
   'tx_fee' => '0.03',
-  'recharge_tip' => '',
-  'tx_tip' => '',
-  'order_fee' => '',
-  'order_max' => '',
-  'order_min' => '',
+  'recharge_tip' => '1.充币时间为0-24小时，到账时间为0-36小时，最低充币100USDT/100USDC/0.02ETH/0.0',
+  'tx_tip' => '1.提笔时间为0-24小时，到账时间为0-36小时，最低充币100USDT/100USDC/0.02ETH/0.0',
+  'order_max' => '100000',
+  'order_min' => '10',
   'tx_times' => '1',
+  'kefu' => 'https://www.baidu.com/',
 );

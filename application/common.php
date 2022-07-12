@@ -688,3 +688,7 @@ function generateOrderSn()
 function usdtprice(){
         return 6.4;
 }
+function is_valid_email($email)//判断是不是邮箱的函数
+{
+    return preg_match('/^[a-zA-Z0-9._%-]+@([a-zA-Z0-9.-]+.)+[a-zA-Z]{2,4}$/u', $email);
+}

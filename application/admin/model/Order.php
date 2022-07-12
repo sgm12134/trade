@@ -59,5 +59,9 @@ class Order extends Model
     public function user(){
         return $this->belongsTo(\app\common\model\User::class,'user_id','id',[],'LEFT')->setEagerlyType(0);
     }
+    public function admin(){
+        return $this->belongsTo(Admin::class,'admin_id','id',[],'LEFT')->setEagerlyType(0);
+
+    }
 
 }

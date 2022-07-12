@@ -308,11 +308,21 @@ class Index extends Api
             if($v->state ==1){
                 $v->state_str='待审核';
             }else if($v->state ==2){
+                $v->state_str='打款中';
+            }else if($v->state ==3){
                 $v->state_str='已打款';
-            }else{
+            }
+            else{
                 $v->state_str='拒绝';
             }
         }
         $this->success(__('成功'),$data);
+    }
+
+    public function getfee(){
+        $num=$this->request->param('num');
+        $rate= Db::name('fee')->where('value','>=',$num)->order('id asc')->value('value');
+        $this->success(__('成功'),$rate);
+
     }
 }

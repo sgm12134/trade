@@ -28,14 +28,22 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                     [
                         {checkbox: true},
                         {field: 'id', title: __('Id')},
+                        {field: 'user.username', title: __('用户'), operate: 'LIKE'},
                         {field: 'order_no', title: __('Order_no'), operate: 'LIKE'},
-
+                        {field: 'username', title: __('Username')},
+                        {field: 'bank', title: __('Bank'), operate: 'LIKE'},
+                        {field: 'bankaccount', title: __('Bankaccount'), operate: 'LIKE'},
+                        {field: 'bankaddress', title: __('开户行')},
                         {field: 'usdtnum', title: __('代付USDT数量')},
                         {field: 'amount', title: __('代付人民币金额')},
-                        // {field: 'all', title: __('人民币总金额')},
                         {field: 'allusdt', title: __('USDT总金额')},
-                        {field: 'fee', title: __('手续费USDT')},
+                        {field: 'usdtprice', title: __('实时价格')},
+                        {field: 'fee', title: __('U手续费')},
                         {field: 'usdtprice', title: __('Usdtprice')},
+                        {field: 'submit_time', title: __('Submit_time'), operate:'RANGE', addclass:'datetimerange', autocomplete:false, formatter: Table.api.formatter.datetime},
+                        {field: 'time', title: __('Time'), operate:'RANGE', addclass:'datetimerange', autocomplete:false, formatter: Table.api.formatter.datetime},
+                        {field: 'payment_voucher', title: __('打款凭证'), events: Table.api.events.image, formatter: Table.api.formatter.image, operate: false},
+                        {field: 'admin.username', title: __('委托打款'), operate: 'LIKE'},
                         {field: 'state', title: __('Pay_way'), formatter: Table.api.formatter.label,searchList: {
                                 1:'银行卡',
                                 2:'微信',
@@ -43,23 +51,15 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                             }},
 
 
-                        {field: 'user.username', title: __('提交人'), operate: 'LIKE'},
-                        {field: 'username', title: __('Username')},
                         {field: 'wechat', title: __('Wechat')},
-                        {field: 'bank', title: __('Bank'), operate: 'LIKE'},
-                        {field: 'bankaccount', title: __('Bankaccount'), operate: 'LIKE'},
-                        {field: 'bankaddress', title: __('开户行')},
-                        {field: 'collection_code', title: __('Collection_code'), events: Table.api.events.image, formatter: Table.api.formatter.image, operate: false},
                         {field: 'alipay', title: __('Alipay'), operate: 'LIKE'},
+                        {field: 'collection_code', title: __('Collection_code'), events: Table.api.events.image, formatter: Table.api.formatter.image, operate: false},
                         {field: 'state', title: __('状态'), formatter: Table.api.formatter.label,searchList: {
                                 1:'待审核',
-                                2:'已打款',
-                                3:'拒绝',
+                                2:'打款中',
+                                3:'已打款',
+                                4:'拒绝',
                             }},
-
-
-                        {field: 'submit_time', title: __('Submit_time'), operate:'RANGE', addclass:'datetimerange', autocomplete:false, formatter: Table.api.formatter.datetime},
-                        {field: 'time', title: __('Time'), operate:'RANGE', addclass:'datetimerange', autocomplete:false, formatter: Table.api.formatter.datetime},
                         {field: 'remark', title: __('Remark'), operate: 'LIKE'},
                         {field: 'operate', title: __('Operate'), table: table,width:150,
                             events: Table.api.events.operate,
@@ -67,16 +67,40 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                                 {
                                     name: 'agree',
                                     text: __('同意'),
+                                    title: __('同意'),
                                     icon: 'fa fa-check',
-                                    classname: 'btn btn-xs btn-success btn-magic btn-ajax',
+                                    classname: 'btn btn-xs btn-success btn-magic btn-dialog',
                                     url: 'order/agree',
-                                    confirm: '你确定要同意吗?',
-                                    success:function(){
+                                    callback: function (data) {
+                                        Layer.alert("接收到回传数据：" + JSON.stringify(data), {title: "回传数据"});
                                         table.bootstrapTable('refresh', {});
                                         return true;
                                     },
+
                                     visible:function (data) {
-                                        if(data.state ==1 ){
+                                        if(data.state ==2 ){
+
+                                            return  true
+                                        }else{
+                                            return  false
+                                        }
+                                    }
+                                },
+
+                                {
+                                    name: 'entrust',
+                                    text: __('分配打款员'),
+                                    title: __('分配打款员'),
+                                    classname: 'btn btn-xs btn-success btn-magic btn-dialog',
+                                    icon: 'fa fa-check',
+                                    url: 'order/entrust',
+                                    callback :function(){
+                                        Layer.alert("接收到回传数据：" + JSON.stringify(data), {title: "回传数据"});
+                                        table.bootstrapTable('refresh', {});
+                                    },
+
+                                    visible:function (data) {
+                                        if(data.admin_id ==0 ){
                                             return  true
                                         }else{
                                             return  false
@@ -87,19 +111,15 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                                     name: 'refuse',
                                     text: __('拒绝'),
                                     title: __('拒绝'),
-                                    classname: 'btn btn-xs btn-primary btn-dialog',
+                                    classname: 'btn btn-xs btn-primary  btn-magic btn-dialog',
                                     icon: 'fa fa-close',
                                     url: 'order/refuse',
                                     callback: function (data) {
-
-                                    },
-
-                                    success:function(){
                                         table.bootstrapTable('refresh', {});
                                         return true;
                                     },
                                     visible:function (data) {
-                                        if(data.state ==1){
+                                        if(data.state ==2){
                                             return  true
                                         }else{
                                             return  false
@@ -119,6 +139,9 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
             Controller.api.bindevent();
         },
         edit: function () {
+            Controller.api.bindevent();
+        },
+        entrust:function (){
             Controller.api.bindevent();
         },
         agree: function () {
