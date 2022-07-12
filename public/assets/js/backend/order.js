@@ -62,7 +62,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'payment_voucher', title: __('打款凭证'), events: Table.api.events.image, formatter: Table.api.formatter.image, operate: false},
                         {field: 'amount', title: __('代付金额')},
                         {field: 'usdtprice', title: __('实时u价')},
-                        {field: 'allusdt', title: __('USDT总金额')},
+                        {field: 'usdtnum', title: __('USDT总金额')},
                         {field: 'fee', title: __('交易手续费'),visible: Config.admin.id == 1 ? true : false},
                         {field: 'admin.username', title: __('委托打款'), operate: 'LIKE'},
                         {field: 'entrust_money', title: __('委派佣金')},
