@@ -198,6 +198,7 @@ class Index extends Api
                     'usdtprice'=>$usdtprice,
                     'fee'=>bcdiv(bcmul($v['amount'],Db::name('fee')->where('num','>=',$v['amount'])->order('id asc')->value('value'),2),$usdtprice,2),
                     'all'=>$v['total'],//人民币总额
+
                     'allusdt'=>bcdiv($v['total'],$usdtprice,2),//usdt 总额
                 ];
             }else if($type =='微信'){
