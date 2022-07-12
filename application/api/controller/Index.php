@@ -343,7 +343,7 @@ class Index extends Api
                 $v->state_str='已打款';
             }
             else{
-                $v->state_str='拒绝';
+                $v->state_str='下发失败';
             }
         }
         $this->success(__('成功'),$data);
