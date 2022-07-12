@@ -166,7 +166,7 @@ class Index extends Api
         $total=array_sum(array_column($data, 'total')); //总余额用户
         $total_price=bcdiv($total,$usdtprice,2);
         $user=$this->auth->getUserinfo();
-        $order_fee=Config::get('site.order_fee');
+        $order_fee=$rate=
         $order_max=Config::get('site.order_max');
         $order_min=Config::get('site.order_min');
         if($user['money']<$total_price){
@@ -196,7 +196,7 @@ class Index extends Api
                     'amount'=>$v['amount'],
                     'usdtnum'=>bcdiv($v['amount'],$usdtprice,2),
                     'usdtprice'=>$usdtprice,
-                    'fee'=>bcdiv(bcmul($v['amount'],$order_fee,2),$usdtprice,2),
+                    'fee'=>bcdiv(bcmul($v['amount'],Db::name('fee')->where('num','>=',$v['amount'])->order('id asc')->value('value'),2),$usdtprice,2),
                     'all'=>$v['total'],//人民币总额
                     'allusdt'=>bcdiv($v['total'],$usdtprice,2),//usdt 总额
                 ];
@@ -215,7 +215,8 @@ class Index extends Api
                     'amount'=>$v['amount'],
                     'usdtnum'=>bcdiv($v['amount'],$usdtprice,2),
                     'usdtprice'=>$usdtprice,
-                    'fee'=>bcdiv(bcmul($v['amount'],$order_fee,2),$usdtprice,2),
+                    'fee'=>bcdiv(bcmul($v['amount'],Db::name('fee')->where('num','>=',$v['amount'])->order('id asc')->value('value'),2),$usdtprice,2),
+
                     'all'=>$v['total'],//人民币总额
                     'allusdt'=>bcdiv($v['total'],$usdtprice,2),//usdt 总额
                 ];
@@ -235,7 +236,7 @@ class Index extends Api
                     'amount'=>$v['amount'],
                     'usdtnum'=>bcdiv($v['amount'],$usdtprice,2),
                     'usdtprice'=>$usdtprice,
-                    'fee'=>bcdiv(bcmul($v['amount'],$order_fee,2),$usdtprice,2),
+                    'fee'=>bcdiv(bcmul($v['amount'],Db::name('fee')->where('num','>=',$v['amount'])->order('id asc')->value('value'),2),$usdtprice,2),
                     'all'=>$v['total'],//人民币总额
                     'allusdt'=>bcdiv($v['total'],$usdtprice,2),//usdt 总额
                 ];
