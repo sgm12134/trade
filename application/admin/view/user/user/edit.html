@@ -3,18 +3,6 @@
     <input type="hidden" name="row[id]" value="{$row.id}">
 
     <div class="form-group">
-        <label for="c-username" class="control-label col-xs-12 col-sm-2">{:__('Username')}:</label>
-        <div class="col-xs-12 col-sm-4">
-            <input id="c-username" data-rule="required" class="form-control" name="row[username]" type="text" value="{$row.username|htmlentities}">
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="c-nickname" class="control-label col-xs-12 col-sm-2">{:__('Nickname')}:</label>
-        <div class="col-xs-12 col-sm-4">
-            <input id="c-nickname" data-rule="required" class="form-control" name="row[nickname]" type="text" value="{$row.nickname|htmlentities}">
-        </div>
-    </div>
-    <div class="form-group">
         <label for="c-password" class="control-label col-xs-12 col-sm-2">{:__('Password')}:</label>
         <div class="col-xs-12 col-sm-4">
             <input id="c-password" data-rule="password" class="form-control" name="row[password]" type="password" value="" placeholder="{:__('Leave password blank if dont want to change')}" autocomplete="new-password" />
@@ -56,54 +44,7 @@
         </div>
     </div>
 
-    <div class="form-group">
-        <label for="c-successions" class="control-label col-xs-12 col-sm-2">{:__('Successions')}:</label>
-        <div class="col-xs-12 col-sm-4">
-            <input id="c-successions" data-rule="required" class="form-control" name="row[successions]" type="number" value="{$row.successions}">
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="c-maxsuccessions" class="control-label col-xs-12 col-sm-2">{:__('Maxsuccessions')}:</label>
-        <div class="col-xs-12 col-sm-4">
-            <input id="c-maxsuccessions" data-rule="required" class="form-control" name="row[maxsuccessions]" type="number" value="{$row.maxsuccessions}">
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="c-prevtime" class="control-label col-xs-12 col-sm-2">{:__('Prevtime')}:</label>
-        <div class="col-xs-12 col-sm-4">
-            <input id="c-prevtime" data-rule="required" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm:ss" data-use-current="true" name="row[prevtime]" type="text" value="{$row.prevtime|datetime}">
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="c-logintime" class="control-label col-xs-12 col-sm-2">{:__('Logintime')}:</label>
-        <div class="col-xs-12 col-sm-4">
-            <input id="c-logintime" data-rule="required" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm:ss" data-use-current="true" name="row[logintime]" type="text" value="{$row.logintime|datetime}">
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="c-loginip" class="control-label col-xs-12 col-sm-2">{:__('Loginip')}:</label>
-        <div class="col-xs-12 col-sm-4">
-            <input id="c-loginip" data-rule="required" class="form-control" name="row[loginip]" type="text" value="{$row.loginip}">
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="c-loginfailure" class="control-label col-xs-12 col-sm-2">{:__('Loginfailure')}:</label>
-        <div class="col-xs-12 col-sm-4">
-            <input id="c-loginfailure" data-rule="required" class="form-control" name="row[loginfailure]" type="number" value="{$row.loginfailure}">
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="c-joinip" class="control-label col-xs-12 col-sm-2">{:__('Joinip')}:</label>
-        <div class="col-xs-12 col-sm-4">
-            <input id="c-joinip" data-rule="required" class="form-control" name="row[joinip]" type="text" value="{$row.joinip}">
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="c-jointime" class="control-label col-xs-12 col-sm-2">{:__('Jointime')}:</label>
-        <div class="col-xs-12 col-sm-4">
-            <input id="c-jointime" data-rule="required" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm:ss" data-use-current="true" name="row[jointime]" type="text" value="{$row.jointime|datetime}">
-        </div>
-    </div>
+
     <div class="form-group">
         <label for="content" class="control-label col-xs-12 col-sm-2">{:__('Status')}:</label>
         <div class="col-xs-12 col-sm-8">

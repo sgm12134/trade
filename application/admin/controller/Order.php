@@ -90,7 +90,7 @@ class Order extends Backend
         $row->payment_voucher=$params['payment_voucher'];
         $is_sms=0;
         $user=User::find($row->user_id);
-          if(is_valid_email($user->username)){
+          if(is_valid_email($user->email)){
               $email = new Email;
               $result = $email
                   ->to($user->username)

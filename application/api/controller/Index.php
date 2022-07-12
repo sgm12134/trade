@@ -278,7 +278,12 @@ class Index extends Api
     }
 
     public function userlog(){
-        $data=Userloginlog::where('user_id',$this->auth->id)->select();
+        $page = $this->request->param("page",1);
+        $limit = $this->request->param("limit",10);
+        $data=Userloginlog::where('user_id',$this->auth->id)->paginate('',true,[
+            'page'=>$page,
+            'list_rows'=>$limit,
+        ]);
 
         foreach ($data as $k=>$v){
             $v->time_str=date('Y-m-d H:i:s',$v->time);
@@ -287,7 +292,12 @@ class Index extends Api
     }
 
     public function fund(){
-        $data=  Db::name('user_money_log')->where('user_id',$this->auth->id)->select();
+        $page = $this->request->param("page",1);
+        $limit = $this->request->param("limit",10);
+        $data=  Db::name('user_money_log')->where('user_id',$this->auth->id)->paginate('',true,[
+            'page'=>$page,
+            'list_rows'=>$limit,
+        ]);
         foreach ($data as $k=>$v){
             $data[$k]['createtime_str']=date('Y-m-d H:i:s',$v['createtime']);
         }
@@ -299,12 +309,22 @@ class Index extends Api
     }
 
     public function bank(){
-        $bank=  Db::name('bank')->where('state',1)->select();
+        $page = $this->request->param("page",1);
+        $limit = $this->request->param("limit",10);
+        $bank=  Db::name('bank')->where('state',1)->order('id','desc')->paginate('',true,[
+            'page'=>$page,
+            'list_rows'=>$limit,
+        ]);
         $this->success(__('成功'),$bank);
     }
 
     public function order(){
-        $data=Order::where('user_id',$this->auth->id)->select();
+        $page = $this->request->param("page",1);
+        $limit = $this->request->param("limit",10);
+        $data=Order::where('user_id',$this->auth->id)->rder('id','desc')->paginate('',true,[
+            'page'=>$page,
+            'list_rows'=>$limit,
+        ]);;
         foreach ($data as $k=>$v){
             $v->time_str=date('Y-m-d H:i:s',$v->time);
             $v->submit_time_str=date('Y-m-d H:i:s',$v->submit_time);
