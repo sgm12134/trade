@@ -1,0 +1,53 @@
+<style>
+    .notice-item td{
+        padding: 10px !important;
+    }
+
+    .page-header {
+        margin-bottom: 0px !important;
+    }
+</style>
+
+<div id="content-container" class="container">
+
+    <a href="javascript:;" class="btn btn-primary btn-refresh hidden" title="{:__('Refresh')}" ><i class="fa fa-refresh"></i> </a>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h2 class="page-header">
+                        消息通知
+                        {if $haveUnread}
+                        <button class="pull-right btn btn-default mark-event" data-url="{:url('notice/admin/mark')}">全部标记为已读</button>
+                        {/if}
+                    </h2>
+
+                    <table class="table table-hover">
+                        <tbody>
+                        {foreach $list as $v}
+                        <tr class="notice-item">
+                            <td><a data-title="{$v.ext_arr.url_title}" class="{$v.ext_arr.url_type == 2 ? 'btn-dialog' : ''} {$v.ext_arr.url_type == 1 ? 'btn-addtabs' : ''}" href="{$v.ext_arr.url ?? 'javascript:;'}" target="{:isset($v.ext_arr.url_type) && !empty($v.ext_arr.url) && $v.ext_arr.url_type == 3 ? 'target':'_self'}">{$v.content}</a></td>
+                            <td>{$v.createtime|time_text}</td>
+                            <td style="text-align: center">
+                                {if $v.readtime == null}
+                                <button class="btn btn-success mark-event" data-url="{:url('notice/admin/mark', ['id' => $v.id])}">已读</button>
+                                {else}
+                                已读
+                                {/if}
+                            </td>
+                        </tr>
+                        {/foreach}
+                        </tbody>
+                    </table>
+
+                    {if $list->count() == 0}
+                    <div class="nothing" style="text-align: center;">暂无消息</div>
+                    {/if}
+
+                    {$list->render()}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

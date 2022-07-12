@@ -1,0 +1,158 @@
+<form id="edit-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">({$row.id??'0'}){:__('Visible_switch')}:</label>
+        <div class="col-xs-12 col-sm-8">
+
+            <select  id="c-visible_switch" data-rule="required" class="form-control selectpicker" name="row[visible_switch]">
+                {foreach name="visibleSwitchList" item="vo"}
+                <option value="{$key}" {in name="key" value="$row.visible_switch"}selected{/in}>{$vo}</option>
+                {/foreach}
+            </select>
+
+        </div>
+    </div>
+
+
+    <!--    公众号模版消息-->
+    {if $row.type == 'mptemplate'}
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('mptemplate_id')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-mptemplate_id" data-rule="required" class="form-control" name="row[mptemplate_id]" type="text" value="{$row.mptemplate_id|htmlentities}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('mptemplate_json')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <p class="help-block">字段格式 {{字段名}}, 例如: {{user_nickname}}、必须严格按照公众号模版消息参数来，否则会发送失败</p>
+            <dl class="fieldlist" data-name="row[mptemplate_json]">
+                <dd>
+                    <ins>模版参数</ins>
+                    <ins>字段</ins>
+                </dd>
+                <dd>
+                    <a href="javascript:;" class="btn btn-sm btn-success btn-append"><i class="fa fa-plus"></i> 追加</a>
+                </dd>
+                <textarea name="row[mptemplate_json]" class="form-control hide" cols="30" rows="5">{$row.mptemplate_json|htmlentities}</textarea>
+            </dl>
+        </div>
+    </div>
+    {else}
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('content')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <p class="help-block">字段格式 {{字段名}}, 例如: {{user_nickname}}</p>
+            <textarea class="form-control editor" name="row[content]">{$row.content|htmlentities}</textarea>
+        </div>
+    </div>
+    {/if}
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('url_type')}:</label>
+        <div class="col-xs-12 col-sm-8">
+
+            <select  id="c-url_type" data-rule="required" class="form-control selectpicker" name="row[url_type]">
+                {foreach name="urlTypeList" item="vo"}
+                <option value="{$key}" {in name="key" value="$row.url_type"}selected{/in}>{$vo}</option>
+                {/foreach}
+            </select>
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('url')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-url" data-rule="" class="form-control" name="row[url]" type="text" value="{$row.url}">
+            <div class="help-block">
+                温馨提示：链接非http开头非/开头，会自动调用 url 补全，url和url标题支持使用字段
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group" data-favisible="url_type=2||url_type=1">
+        <label class="control-label col-xs-12 col-sm-2">{:__('url_title')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-url_title" data-rule="" class="form-control" name="row[url_title]" type="text" value="{$row.url_title}">
+        </div>
+
+    </div>
+
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">支持字段</label>
+        <div class="col-xs-12 col-sm-8">
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>字段</th>
+                    <th>注释</th>
+                </tr>
+                </thead>
+                <tbody>
+                {foreach $event->content_arr as $k => $v}
+                <tr>
+                    <td>{$k}</td>
+                    <td>{$v}</td>
+                </tr>
+                {/foreach}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">默认字段</label>
+        <div class="col-xs-12 col-sm-8">
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>字段</th>
+                    <th>注释</th>
+                </tr>
+                </thead>
+                <tbody>
+                {if array_key_exists("user_id",$event->content_arr)}
+                    <tr>
+                        <td>user_nickname</td>
+                        <td>用户昵称</td>
+                    </tr>
+                    <tr>
+                        <td>user_email</td>
+                        <td>邮箱</td>
+                    </tr>
+                    <tr>
+                        <td>user_mobile</td>
+                        <td>手机号</td>
+                    </tr>
+                {/if}
+
+                <tr>
+                    <td>createtime</td>
+                    <td>发送时间(年-月-日 时:分:秒)</td>
+                </tr>
+                <tr>
+                    <td>createdate</td>
+                    <td>发送日期(年-月-日)</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+
+    <div class="form-group layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-success btn-embossed disabled">{:__('OK')}</button>
+            <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+        </div>
+    </div>
+</form>

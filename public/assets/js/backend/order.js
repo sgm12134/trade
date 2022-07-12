@@ -30,7 +30,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'id', title: __('Id')},
                         {field: 'user.username', title: __('用户'), operate: 'LIKE'},
                         {field: 'order_no', title: __('Order_no'), operate: 'LIKE'},
-                        {field: 'username', title: __('Username')},
+                        {field: 'username', title: __('收款人')},
                         {field: 'bank', title: __('Bank'), operate: 'LIKE'},
                         {field: 'bankaccount', title: __('Bankaccount'), operate: 'LIKE'},
                         {field: 'bankaddress', title: __('开户行')},
@@ -44,7 +44,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'time', title: __('Time'), operate:'RANGE', addclass:'datetimerange', autocomplete:false, formatter: Table.api.formatter.datetime},
                         {field: 'payment_voucher', title: __('打款凭证'), events: Table.api.events.image, formatter: Table.api.formatter.image, operate: false},
                         {field: 'admin.username', title: __('委托打款'), operate: 'LIKE'},
-                        {field: 'state', title: __('Pay_way'), formatter: Table.api.formatter.label,searchList: {
+                        {field: 'pay_way', title: __('Pay_way'), formatter: Table.api.formatter.label,searchList: {
                                 1:'银行卡',
                                 2:'微信',
                                 3:'支付宝',

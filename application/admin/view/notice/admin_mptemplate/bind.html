@@ -1,0 +1,42 @@
+<form id="add-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+
+    <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <p>
+            绑定微信仅用于接收微信公众号模版消息通知、必须关注公众号。
+        </p>
+        <p>
+            一个微信号可以绑定多个管理员，每个管理员只能绑定一个微信号。
+        </p>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                绑定账号
+
+                <a href="javascript:;" class="btn btn-primary btn-refresh"   title="{:__('Refresh')}"  style="color: #ffff"><i class="fa fa-refresh"></i> </a>
+            </h3>
+        </div>
+        <div class="panel-body">
+            {if $exist}
+           <div style="text-align: center">
+               <div>
+                   已绑定账号`{$exist.nickname}`
+                   <button id="remove-event" type="button" class="btn btn-primary btn-ajax" data-url="" data-confirm="确认操作">解绑</button>
+               </div>
+           </div>
+            {else}
+
+            <div style="text-align: center">
+                <p>扫描二维码绑定账号</p>
+                <div style="height: 200px; width: 200px; margin: 0 auto;" id="qrcode">
+
+                </div>
+            </div>
+
+            {/if}
+        </div>
+    </div>
+</form>
+

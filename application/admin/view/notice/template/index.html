@@ -1,0 +1,66 @@
+<div class="panel panel-default panel-intro">
+    <div class="panel-heading">
+        {:build_heading(null,FALSE)}
+        <ul class="nav nav-tabs" data-field="platform">
+            {foreach name="platformList" item="vo"}
+            <li class="{:$params.platform === (string)$key ? 'active' : ''}"><a href="#t-{$key}" data-value="{$key}" data-toggle="tab">{$vo}</a></li>
+            {/foreach}
+        </ul>
+    </div>
+    <form role="form">
+    <div class="panel-body">
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane fade active in" id="one">
+                <div class="widget-body no-padding">
+                    <div id="toolbar" class="toolbar">
+                    </div>
+                    <table class="table table-striped table-bordered table-hover table-nowrap">
+                        <thead>
+                        <tr>
+                            <th>消息名称</th>
+                            {foreach $typeList as $v}
+                            <th>{$v}</th>
+                            {/foreach}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {foreach $list as $k=>$item}
+                        <tr>
+                            <td>{$item.noticeevent.name}</td>
+                            {foreach $item.item as $k2=>$v2}
+                            <td>
+                                {if $v2.error}
+                                <div style="line-height: 30px;">
+<!--                                    {$v2.error}-->
+                                    未开启 <i class="fa fa-info-circle" data-toggle="tooltip" title="" data-original-title="请在消息事件里面开启"></i>
+                                </div>
+                                {else}
+                                <div class="parent" data-notice_event_id="{$item.noticeevent.id}" data-platform="{$v2.platform}" data-type="{$v2.type}">
+                                    <div style="display: flex; align-items: center">
+                                        <div class="btn-group" style="line-height: 30px; background: rgba(27,180,146,0.3);">
+                                            <button type="button" class="btn btn-success btn-dialog" data-url="notice/template/edit?notice_event_id={$item.noticeevent.id}&platform={$v2.platform}&type={$v2.type}" data-title="{$item.noticeevent.name}配置">配置</button>
+                                            <span style="padding-right: 10px; padding-left: 10px; color: rgb(27,180,146)">发送次数:{$v2.send_num}</span>
+                                        </div>
+                                        <div style="margin-left: 15px;">
+                                            <input id="c-switch-{$k}-{$k2}" name="switch-{$k}-{$k2}" class="form-control switch-input" type="hidden" value="{$v2.visible_switch}">
+                                            <a href="javascript:;" data-toggle="switcher" class="btn-switcher "
+                                               data-input-id="c-switch-{$k}-{$k2}" data-yes="1" data-no="0"><i
+                                                    class="fa fa-toggle-on text-success {$v2.visible_switch==0?'fa-flip-horizontal text-gray':''} fa-2x"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                {/if}
+
+                            </td>
+                            {/foreach}
+                        </tr>
+                        {/foreach}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    </form>
+</div>

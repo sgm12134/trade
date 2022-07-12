@@ -1,0 +1,87 @@
+<form id="edit-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Platform')}:</label>
+        <div class="col-xs-12 col-sm-8">
+                        
+            <select  id="c-platform" data-rule="required" class="form-control selectpicker" multiple="" name="row[platform][]">
+                {foreach name="platformList" item="vo"}
+                    <option value="{$key}" {in name="key" value="$row.platform"}selected{/in}>{$vo}</option>
+                {/foreach}
+            </select>
+
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Type')}:</label>
+        <div class="col-xs-12 col-sm-8">
+                        
+            <select  id="c-type" data-rule="required" class="form-control selectpicker" multiple="" name="row[type][]">
+                {foreach name="typeList" item="vo"}
+                    <option value="{$key}" {in name="key" value="$row.type"}selected{/in}>{$vo}</option>
+                {/foreach}
+            </select>
+
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Name')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-name" data-rule="required" class="form-control" name="row[name]" type="text" value="{$row.name|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Event')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-event" data-rule="required" class="form-control" name="row[event]" type="text" value="{$row.event|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Send_num')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-send_num" data-rule="required" class="form-control" name="row[send_num]" type="number" value="{$row.send_num|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Send_fail_num')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-send_fail_num" data-rule="required" class="form-control" name="row[send_fail_num]" type="number" value="{$row.send_fail_num|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Content')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="form-group">
+                <dl class="fieldlist" data-name="row[content]">
+                    <dd>
+                        <ins>字段名</ins>
+                        <ins>注释</ins>
+                    </dd>
+                    <dd>
+                        <a href="javascript:;" class="btn btn-sm btn-success btn-append"><i class="fa fa-plus"></i> 追加</a>
+                    </dd>
+                    <textarea name="row[content]" class="form-control hide" cols="30" rows="5">{$row->content}</textarea>
+                </dl>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Visible_switch')}:</label>
+        <div class="col-xs-12 col-sm-8">
+                        
+            <select  id="c-visible_switch" data-rule="required" class="form-control selectpicker" name="row[visible_switch]">
+                {foreach name="visibleSwitchList" item="vo"}
+                    <option value="{$key}" {in name="key" value="$row.visible_switch"}selected{/in}>{$vo}</option>
+                {/foreach}
+            </select>
+
+        </div>
+    </div>
+    <div class="form-group layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-success btn-embossed disabled">{:__('OK')}</button>
+            <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+        </div>
+    </div>
+</form>

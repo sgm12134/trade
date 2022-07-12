@@ -1,0 +1,60 @@
+<style>
+    .notice-item td{
+        padding: 10px !important;
+    }
+
+    .page-header {
+        margin-bottom: 0px !important;
+    }
+</style>
+
+<div id="content-container" class="container">
+    <div class="row">
+        <div class="col-md-3">
+            {include file="common/sidenav" /}
+        </div>
+        <div class="col-md-9">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h2 class="page-header">
+                        消息通知
+                        {if $haveUnread}
+                        <button class="pull-right btn btn-default mark-event" data-url="{:addon_url('notice/api/mark')}">全部标记为已读</button>
+                        {/if}
+                    </h2>
+
+                    <table class="table table-hover">
+<!--                        <thead>-->
+<!--                        <tr>-->
+<!--                            <th>消息内容</th>-->
+<!--                            <th>创建时间</th>-->
+<!--                            <th>状态</th>-->
+<!--                        </tr>-->
+<!--                        </thead>-->
+                        <tbody>
+                        {foreach $list as $v}
+                        <tr class="notice-item">
+                            <td><a data-title="{$v.ext_arr.url_title}" class="{$v.ext_arr.url_type == 2 ? 'btn-dialog' : ''}" href="{$v.ext_arr.url ?? 'javascript:;'}" target="{:isset($v.ext_arr.url_type) && !empty($v.ext_arr.url) && $v.ext_arr.url_type == 3 ? 'target':'_self'}">{$v.content}</a></td>
+                            <td>{$v.createtime|time_text}</td>
+                            <td style="text-align: center">
+                                {if $v.readtime == null}
+                                <button class="btn btn-success mark-event" data-url="{:addon_url('notice/api/mark', ['id' => $v.id])}">已读</button>
+                                {else}
+                                已读
+                                {/if}
+                            </td>
+                        </tr>
+                        {/foreach}
+                        </tbody>
+                    </table>
+
+                    {if $list->count() == 0}
+                    <div class="nothing"></div>
+                    {/if}
+
+                    {$list->render()}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

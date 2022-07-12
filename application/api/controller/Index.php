@@ -16,7 +16,7 @@ use think\Validate;
  */
 class Index extends Api
 {
-    protected $noNeedLogin = [];
+    protected $noNeedLogin = ['getfee'];
     protected $noNeedRight = ['*'];
 
     /**
@@ -190,6 +190,7 @@ class Index extends Api
                     'bankaccount'=>$v['banknum'],
                     'bankaddress'=>$v['bankaddress'],
                     'state'=>1,
+                    'is_sms'=>0,
                     'submit_time'=>time(),
                     'amount'=>$v['amount'],
                     'usdtnum'=>bcdiv($v['amount'],$usdtprice,2),
@@ -208,6 +209,7 @@ class Index extends Api
                     'order_no'=>'A'.time(),
                     'collection_code'=>$v['imgurl'],
                     'state'=>1,
+                    'is_sms'=>0,
                     'submit_time'=>time(),
                     'amount'=>$v['amount'],
                     'usdtnum'=>bcdiv($v['amount'],$usdtprice,2),
@@ -227,6 +229,7 @@ class Index extends Api
                     'order_no'=>'A'.time(),
                     'collection_code'=>$v['imgurl'],
                     'state'=>1,
+                    'is_sms'=>0,
                     'submit_time'=>time(),
                     'amount'=>$v['amount'],
                     'usdtnum'=>bcdiv($v['amount'],$usdtprice,2),
@@ -321,7 +324,7 @@ class Index extends Api
 
     public function getfee(){
         $num=$this->request->param('num');
-        $rate= Db::name('fee')->where('value','>=',$num)->order('id asc')->value('value');
+        $rate= Db::name('fee')->where('num','>=',$num)->order('id asc')->value('value');
         if(empty($rate)){
             $rate=0.01;
         }

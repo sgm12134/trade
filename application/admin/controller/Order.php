@@ -54,7 +54,7 @@ class Order extends Backend
                $list = $this->model
                    ->with(['user','admin'])
                    ->where($where)
-                   ->whereIn('user.admin_id',$this->auth->id)
+                   ->whereIn('order.admin_id',$this->auth->id)
                    ->order($sort, $order)
                    ->paginate($limit);
            }
@@ -88,33 +88,23 @@ class Order extends Backend
         }
         $row->time=time();
         $row->payment_voucher=$params['payment_voucher'];
-        $row->save();
+        $is_sms=0;
         $user=User::find($row->user_id);
           if(is_valid_email($user->username)){
-              $receiver=$user->username;
-              if ($receiver) {
-                  if (!Validate::is($receiver, "email")) {
-                      $this->error(__('Please input correct email'));
-                  }
-                  $email = new Email;
-                  $result = $email
-                      ->to($receiver)
-                      ->subject(__("打款成功"))
-                      ->message('')
-                      ->send();
-                  if ($result) {
-                      $this->success();
-                  } else {
-                      $this->error($email->getError());
-                  }
-              } else {
-                  $this->error(__('Invalid parameters'));
+              $email = new Email;
+              $result = $email
+                  ->to($user->username)
+                  ->subject(__("打款成功"))
+                  ->message('')
+                  ->send();
+              if($result){
+                  $is_sms=1;
               }
           }else{
-
           }
-
-
+            $row->is_sms=$is_sms;
+            $row->save();
+            $this->success();
         }
         return $this->view->fetch();
     }
@@ -130,9 +120,24 @@ class Order extends Backend
             }
             $params = $this->request->post("row/a");
             $row->admin_id=$params['admin_id'];
-            $row->save();
             $row->state=2;
+
+            $row->save();
+
+            // 发送通知-新订单提醒(测试)
+            $noticeParams = [
+                'event' => 'test',
+                'params' => array (
+                    'receiver_admin_ids' => $row->admin_id,
+                    'receiver_admin_group_ids' => 2,
+                    'user_id' => $row->user_id,
+                    'no' => $row->order_no,
+                    'title' => $row->username,
+                    'money' => $row->usdtnum,
+                )];
+            \Think\Hook::listen('send_notice', $noticeParams);
             $this->success();
+
         }
         return $this->view->fetch();
 
