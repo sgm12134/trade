@@ -58,7 +58,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                                 1:'待审核',
                                 2:'打款中',
                                 3:'已打款',
-                                4:'拒绝',
+                                4:'下发失败',
                             }},
                         {field: 'remark', title: __('Remark'), operate: 'LIKE'},
                         {field: 'operate', title: __('Operate'), table: table,width:150,
