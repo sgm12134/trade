@@ -52,7 +52,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                             }
 
                             }},
-                        {field: 'payment_voucher', title: __('付款凭证'), events: Table.api.events.image, formatter: Table.api.formatter.image, operate: false},
+                        // {field: 'payment_voucher', title: __('付款凭证'), events: Table.api.events.image, formatter: Table.api.formatter.image, operate: false},
                         {field: 'amount', title: __('代付金额')},
                         {field: 'usdtprice', title: __('实时u价')},
                         {field: 'allusdt', title: __('USDT总金额')},
