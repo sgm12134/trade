@@ -110,5 +110,9 @@ class User extends Model
     {
         return $this->belongsTo('UserGroup', 'group_id', 'id', [], 'LEFT')->setEagerlyType(0);
     }
+    public function parent()
+    {
+        return $this->belongsTo(User::class, 'parent_id', 'id', [], 'LEFT')->setEagerlyType(0);
+    }
 
 }

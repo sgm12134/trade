@@ -26,6 +26,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {checkbox: true},
                         {field: 'id', title: __('Id'), sortable: true},
                         {field: 'username', title: __('Username'), operate: 'LIKE'},
+                        {field: 'username', title: __('Username'), operate: 'LIKE'},
                         {field: 'money', title: __('余额'), operate: 'LIKE'},
                         {field: 'email', title: __('Email'), operate: 'LIKE'},
                         {field: 'mobile', title: __('Mobile'), operate: 'LIKE'},
