@@ -187,7 +187,7 @@ class Index extends Api
                     'username'=>$v['name'],
                     'bank'=>$v['bank'],
                     'user_id'=>$this->auth->id,
-                    'order_no'=>'A'.time(),
+                    'order_no'=>getNewOrderId('fl'),
                     'bankaccount'=>$v['banknum'],
                     'bankaddress'=>$v['bankaddress'],
                     'state'=>1,
@@ -209,7 +209,7 @@ class Index extends Api
                     'username'=>$v['name'],
                     'wechat'=>$v['zwname'],
                     'user_id'=>$this->auth->id,
-                    'order_no'=>'A'.time(),
+                    'order_no'=>getNewOrderId('fl'),
                     'collection_code'=>$v['imgurl'],
                     'state'=>1,
                     'is_sms'=>0,
@@ -232,7 +232,7 @@ class Index extends Api
                     'alipay'=>$v['zwname'],
                     'user_id'=>$this->auth->id,
                     'admin_id'=>0,
-                    'order_no'=>'A'.time(),
+                    'order_no'=>getNewOrderId('fl'),
                     'collection_code'=>$v['imgurl'],
                     'state'=>1,
                     'is_sms'=>0,
@@ -250,7 +250,7 @@ class Index extends Api
         if($res){
             foreach ($inser_data as $k=>$v){
                 \app\common\model\User::money(-$v['allusdt'],$this->auth->id,'提交订单扣除余额');
-                \app\common\model\User::money(-$v['fee'],$this->auth->id,'订单扣除手续费');
+                \app\common\model\User::money(-$v['fee'],$this->auth->id,'订单扣除手续费',$v['order_no']);
             }
             return $this->success('提交成功');
         }else{
@@ -335,6 +335,7 @@ class Index extends Api
         foreach ($data as $k=>$v){
             $v->time_str=date('Y-m-d H:i:s',$v->time);
             $v->submit_time_str=date('Y-m-d H:i:s',$v->submit_time);
+            $v->after_money=Db::name('order')->where('order_id',$v->order_id)->value('after');
             if($v->state ==1){
                 $v->state_str='待审核';
             }else if($v->state ==2){

@@ -30,7 +30,8 @@
         "ext-curl": "*",
         "ext-pdo": "*",
         "ext-bcmath": "*",
-        "txthinking/mailer": "^2.0"
+        "txthinking/mailer": "^2.0",
+        "godruoyi/php-snowflake": "^2.0"
     },
     "config": {
         "preferred-install": "dist"

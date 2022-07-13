@@ -692,3 +692,22 @@ function is_valid_email($email)//判断是不是邮箱的函数
 {
     return preg_match('/^[a-zA-Z0-9._%-]+@([a-zA-Z0-9.-]+.)+[a-zA-Z]{2,4}$/u', $email);
 }
+
+
+/**
+ * 使用雪花算法生成订单ID
+ * @return string
+ * @throws \Exception
+ */
+function getNewOrderId(string $prefix = 'wx')
+{
+    $snowflake = new \Godruoyi\Snowflake\Snowflake();
+    $swooleSequenceResolver = new \Godruoyi\Snowflake\SwooleSequenceResolver();
+    //32位
+    if (PHP_INT_SIZE == 4) {
+        $id = abs($snowflake->setSequenceResolver($swooleSequenceResolver)->id());
+    } else {
+        $id = $snowflake->setStartTimeStamp(strtotime('2021-08-02') * 1000)->setSequenceResolver($swooleSequenceResolver)->id();
+    }
+    return $prefix . $id;
+}
