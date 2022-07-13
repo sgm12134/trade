@@ -126,7 +126,7 @@ class Index extends Api
         }
         $user=$this->auth->getUser();
         if(empty($user['pay_password'])){
-            $this->error(__('请现设置支付密码'));
+            $this->error(__('请现设置支付密码'),'',120);
         }
         if($pay_password !=$user['pay_password']){
             $this->error(__('支付密码不正确'));

@@ -100,12 +100,26 @@ class Order extends Backend
             $row->order_transaction_profit=$row->fee-$row->entrust_money;
             Db::name('admin')->where('id',$this->auth->id)->setInc('money',$row->entrust_money);
         $user=User::find($row->user_id);
+        $payway='银行卡';
+ if($row->pay_way ==1){
+     $payway='银行卡';
+ }else if($row->pay_way ==2){
+     $payway='微信';
+ }else{
+     $payway='支付宝';
+ }
           if(is_valid_email($user->email)){
               $email = new Email;
               $result = $email
                   ->to($user->username)
                   ->subject(__("打款成功"))
-                  ->message('')
+                  ->message('<div>
+    <p>订单号:'.$row->order_no.'</p>
+    <p>金额:'.$row->amount.'</p>
+    <p>付款方式:'.$payway.'</p>
+    <P>收款人:'.$row->username.'</P>
+    <P>付款时间:'.date('Y-m-d H:i:s',$row->update_time).'</P>
+</div>')
                   ->send();
               if($result){
                   $is_sms=1;
