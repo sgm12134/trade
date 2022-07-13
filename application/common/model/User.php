@@ -98,7 +98,7 @@ class User extends Model
                 //更新会员信息
                 $user->save(['money' => $after]);
                 //写入日志
-                MoneyLog::create(['user_id' => $user_id, 'order_id'=>$order_id,'money' => $money, 'before' => $before, 'after' => $after, 'memo' => $memo]);
+                MoneyLog::create(['user_id' => $user_id, 'order_no'=>$order_id,'money' => $money, 'before' => $before, 'after' => $after, 'memo' => $memo]);
             }
             Db::commit();
         } catch (\Exception $e) {
