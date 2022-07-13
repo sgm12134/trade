@@ -178,7 +178,7 @@ class Order extends Backend
             $params = $this->request->post("row/a");
             $row->remark=$params['remark'];
             $row->update_time=time();
-            \app\common\model\User::money($row->allusdt,$row->user_id,'下发失败');
+            \app\common\model\User::money($row->allusdt,$row->user_id,'下发失败',$row->order_no);
             $row->save();
             $this->success();
         }

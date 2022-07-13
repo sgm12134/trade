@@ -347,8 +347,7 @@ class Index extends Api
         foreach ($data as $k=>$v){
             $v->time_str=date('Y-m-d H:i:s',$v->time);
             $v->submit_time_str=date('Y-m-d H:i:s',$v->submit_time);
-            $v->after_money=Db::name('user_money_log')->where('order_no',$v->order_no)->value('after');
-
+            $v->after_money=Db::name('user_money_log')->where('order_no',$v->order_no)->order('id','desc')->limit(1)->value('after');
             if($v->state ==1){
                 $v->state_str='待审核';
             }else if($v->state ==2){
