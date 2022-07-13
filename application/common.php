@@ -701,13 +701,8 @@ function is_valid_email($email)//判断是不是邮箱的函数
  */
 function getNewOrderId(string $prefix = 'wx')
 {
-    $snowflake = new \Godruoyi\Snowflake\Snowflake();
-    $swooleSequenceResolver = new \Godruoyi\Snowflake\SwooleSequenceResolver();
-    //32位
-    if (PHP_INT_SIZE == 4) {
-        $id = abs($snowflake->setSequenceResolver($swooleSequenceResolver)->id());
-    } else {
-        $id = $snowflake->setStartTimeStamp(strtotime('2021-08-02') * 1000)->setSequenceResolver($swooleSequenceResolver)->id();
-    }
-    return $prefix . $id;
+    #yCode 可以按照自己的实际情况调整
+    $yCode = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J','I','K','L','Q','W','R','T','Y','U');
+    $order_sn = $yCode[intval(date('Y')) - 2011] . strtoupper(dechex(date('m'))) . date('d') . substr(time(), -5) . substr(microtime(), 2, 5) . sprintf('%02d', rand(0, 99));
+    return $order_sn;
 }
