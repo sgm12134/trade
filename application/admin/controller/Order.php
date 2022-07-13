@@ -180,6 +180,10 @@ class Order extends Backend
             $row->update_time=time();
             \app\common\model\User::money($row->allusdt,$row->user_id,'下发失败',$row->order_no);
             $row->save();
+            $old=Db::name('order')->find($ids);
+            unset($old['id']);
+            Db::name('order')->insert($old);
+            $row->delete();
             $this->success();
         }
         return $this->view->fetch();

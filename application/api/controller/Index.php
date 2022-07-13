@@ -173,6 +173,7 @@ class Index extends Api
             $this->error('余额不足');
         }
         $inser_data=[];
+        $time=time();
         foreach ($data as  $k=>$v){
             if($v['amount']<$order_min){
                 $this->error('请正确提交订单');
@@ -197,7 +198,7 @@ class Index extends Api
                     'bankaddress'=>$v['bankaddress'],
                     'state'=>1,
                     'is_sms'=>0,
-                    'submit_time'=>time(),
+                    'submit_time'=>$time,
                     'amount'=>$v['amount'],
                     'admin_id'=>0,
                     'usdtnum'=>$usdtnum,
@@ -218,7 +219,7 @@ class Index extends Api
                     'state'=>1,
                     'is_sms'=>0,
                     'admin_id'=>0,
-                    'submit_time'=>time(),
+                    'submit_time'=>$time,
                     'amount'=>$v['amount'],
                     'usdtnum'=>$usdtnum,
                     'usdtprice'=>$usdtprice,
@@ -239,7 +240,7 @@ class Index extends Api
                     'collection_code'=>$v['imgurl'],
                     'state'=>1,
                     'is_sms'=>0,
-                    'submit_time'=>time(),
+                    'submit_time'=>$time,
                     'amount'=>$v['amount'],
                     'usdtnum'=>$usdtnum,
                     'usdtprice'=>$usdtprice,
