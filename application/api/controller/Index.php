@@ -195,12 +195,11 @@ class Index extends Api
                     'submit_time'=>time(),
                     'amount'=>$v['amount'],
                     'admin_id'=>0,
-                    'usdtnum'=>bcdiv($v['amount'],$usdtprice,0),
+                    'usdtnum'=>round(bcdiv($v['amount'],$usdtprice,2)),
                     'usdtprice'=>$usdtprice,
-                    'fee'=>bcdiv(bcmul($v['amount'],Db::name('fee')->where('num','>=',$v['amount'])->order('id asc')->value('value'),0),$usdtprice,0),
+                    'fee'=>round(bcdiv(bcmul($v['amount'],Db::name('fee')->where('num','>=',$v['amount'])->order('id','asc')->value('value'),2),$usdtprice,2)),
                     'all'=>$v['total'],//人民币总额
-
-                    'allusdt'=>bcdiv($v['total'],$usdtprice,0),//usdt 总额
+                    'allusdt'=>round(bcdiv($v['total'],$usdtprice,2)),//usdt 总额
                 ];
             }else if($type =='微信'){
                 sleep(1);
@@ -216,12 +215,11 @@ class Index extends Api
                     'admin_id'=>0,
                     'submit_time'=>time(),
                     'amount'=>$v['amount'],
-                    'usdtnum'=>bcdiv($v['amount'],$usdtprice,2),
+                    'usdtnum'=>round(bcdiv($v['amount'],$usdtprice,2)),
                     'usdtprice'=>$usdtprice,
-                    'fee'=>bcdiv(bcmul($v['amount'],Db::name('fee')->where('num','>=',$v['amount'])->order('id asc')->value('value'),2),$usdtprice,2),
-
+                    'fee'=>round(bcdiv(bcmul($v['amount'],Db::name('fee')->where('num','>=',$v['amount'])->order('id','asc')->value('value'),2),$usdtprice,2)),
                     'all'=>$v['total'],//人民币总额
-                    'allusdt'=>bcdiv($v['total'],$usdtprice,0),//usdt 总额
+                    'allusdt'=>round(bcdiv($v['total'],$usdtprice,2)),//usdt 总额
                 ];
             }
         else if($type =='支付宝'){
@@ -238,11 +236,11 @@ class Index extends Api
                     'is_sms'=>0,
                     'submit_time'=>time(),
                     'amount'=>$v['amount'],
-                    'usdtnum'=>bcdiv($v['amount'],$usdtprice,0),
+                    'usdtnum'=>round(bcdiv($v['amount'],$usdtprice,2)),
                     'usdtprice'=>$usdtprice,
-                    'fee'=>bcdiv(bcmul($v['amount'],Db::name('fee')->where('num','>=',$v['amount'])->order('id asc')->value('value'),0),$usdtprice,0),
+                    'fee'=>round(bcdiv(bcmul($v['amount'],Db::name('fee')->where('num','>=',$v['amount'])->order('id','asc')->value('value'),2),$usdtprice,2)),
                     'all'=>$v['total'],//人民币总额
-                    'allusdt'=>bcdiv($v['total'],$usdtprice,0),//usdt 总额
+                    'allusdt'=>round(bcdiv($v['total'],$usdtprice,2)),//usdt 总额
                 ];
             }
         }
@@ -364,7 +362,7 @@ class Index extends Api
 
     public function getfee(){
         $num=$this->request->param('num');
-        $rate= Db::name('fee')->where('num','>=',$num)->order('id asc')->value('value');
+        $rate= Db::name('fee')->where('num','>=',$num)->order('id','desc')->value('value');
         if(empty($rate)){
             $rate=0.01;
         }
