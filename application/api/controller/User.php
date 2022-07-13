@@ -383,13 +383,20 @@ class User extends Api
 
     public function userinfo(){
         $data=$this->auth->getUserinfo();
-        $data['usdtprice']=6.5;
+        $data['usdtprice']=usdtprice();
         $this->success('',$data);
     }
 
     public function changepay_password(){
         $user=$this->auth->getUser();
         $psd = $this->request->post('psd');
+        $oldpsd = $this->request->post('oldpsd');
+        $data=$this->auth->getUserinfo();
+        if(!empty($data['pay_password'])){
+            if($data['pay_password'] !=$oldpsd){
+                $this->error('旧密码不正确');
+            }
+        }
         $confirmpsd = $this->request->post('confirmpsd');
         if($confirmpsd !=$psd){
             $this->error('2次密码不正确');
