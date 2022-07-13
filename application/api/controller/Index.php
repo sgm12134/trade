@@ -313,7 +313,7 @@ class Index extends Api
         $page = $this->request->param("page",1);
         $limit = $this->request->param("limit",10);
         //user_money_log
-        $data=  UserMoneyLog::where('user_id',$this->auth->id)->paginate('',false,[
+        $data=  UserMoneyLog::where('user_id',$this->auth->id)->order('id','desc')->paginate('',false,[
             'page'=>$page,
             'list_rows'=>$limit,
         ]);

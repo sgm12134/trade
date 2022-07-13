@@ -31,7 +31,8 @@
         "ext-pdo": "*",
         "ext-bcmath": "*",
         "txthinking/mailer": "^2.0",
-        "godruoyi/php-snowflake": "^2.0"
+        "godruoyi/php-snowflake": "^2.0",
+        "linwj/okex": "^2.2"
     },
     "config": {
         "preferred-install": "dist"
