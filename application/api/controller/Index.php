@@ -180,12 +180,13 @@ class Index extends Api
             if($v['amount']>$order_max){
                 $this->error('请正确提交订单');
             }
+            $usdtnum=round(bcdiv($v['amount'],$usdtprice,2));
+            $fee_rate=Db::name('fee')->where('num','>=',$v['amount'])->order('id','asc')->value('value');
+            $usdtfee=round(bcmul($usdtnum,$fee_rate,2));
+            $rfee=round(bcmul($v['amount'],$fee_rate,2));
             if($type =='银行卡'){
                 sleep(1);
-                $usdtnum=round(bcdiv($v['amount'],$usdtprice,2));
-                $fee_rate=Db::name('fee')->where('num','>=',$v['amount'])->order('id','asc')->value('value');
-                $usdtfee=round(bcmul($usdtnum,$fee_rate,2));
-                $rfee=round(bcmul($v['amount'],$fee_rate,2));
+
                 $inser_data[]=[
                     'pay_way'=>1,//银行卡
                     'username'=>$v['name'],
