@@ -182,12 +182,16 @@ class Index extends Api
             }
             if($type =='银行卡'){
                 sleep(1);
+                $usdtnum=round(bcdiv($v['amount'],$usdtprice,2));
+                $fee_rate=Db::name('fee')->where('num','>=',$v['amount'])->order('id','asc')->value('value');
+                $usdtfee=round(bcmul($usdtnum,$fee_rate,2));
+                $rfee=round(bcmul($v['amount'],$fee_rate,2));
                 $inser_data[]=[
                     'pay_way'=>1,//银行卡
                     'username'=>$v['name'],
                     'bank'=>$v['bank'],
                     'user_id'=>$this->auth->id,
-                    'order_no'=>getNewOrderId('fl'),
+                    'order_no'=>getNewOrderId(),
                     'bankaccount'=>$v['banknum'],
                     'bankaddress'=>$v['bankaddress'],
                     'state'=>1,
@@ -195,11 +199,11 @@ class Index extends Api
                     'submit_time'=>time(),
                     'amount'=>$v['amount'],
                     'admin_id'=>0,
-                    'usdtnum'=>round(bcdiv($v['amount'],$usdtprice,2)),
+                    'usdtnum'=>$usdtnum,
                     'usdtprice'=>$usdtprice,
-                    'fee'=>round(bcdiv(bcmul($v['amount'],Db::name('fee')->where('num','>=',$v['amount'])->order('id','asc')->value('value'),2),$usdtprice,2)),
-                    'all'=>$v['total'],//人民币总额
-                    'allusdt'=>round(bcdiv($v['total'],$usdtprice,2)),//usdt 总额
+                    'fee'=>$usdtfee,
+                    'all'=>$v['amount']+$rfee,//人民币总额
+                    'allusdt'=>$usdtnum+$usdtfee,
                 ];
             }else if($type =='微信'){
                 sleep(1);
@@ -208,18 +212,18 @@ class Index extends Api
                     'username'=>$v['name'],
                     'wechat'=>$v['zwname'],
                     'user_id'=>$this->auth->id,
-                    'order_no'=>getNewOrderId('fl'),
+                    'order_no'=>getNewOrderId(),
                     'collection_code'=>$v['imgurl'],
                     'state'=>1,
                     'is_sms'=>0,
                     'admin_id'=>0,
                     'submit_time'=>time(),
                     'amount'=>$v['amount'],
-                    'usdtnum'=>round(bcdiv($v['amount'],$usdtprice,2)),
+                    'usdtnum'=>$usdtnum,
                     'usdtprice'=>$usdtprice,
-                    'fee'=>round(bcdiv(bcmul($v['amount'],Db::name('fee')->where('num','>=',$v['amount'])->order('id','asc')->value('value'),2),$usdtprice,2)),
-                    'all'=>$v['total'],//人民币总额
-                    'allusdt'=>round(bcdiv($v['total'],$usdtprice,2)),//usdt 总额
+                    'fee'=>$usdtfee,
+                    'all'=>$v['amount']+$rfee,//人民币总额
+                    'allusdt'=>$usdtnum+$usdtfee,
                 ];
             }
         else if($type =='支付宝'){
@@ -230,17 +234,17 @@ class Index extends Api
                     'alipay'=>$v['zwname'],
                     'user_id'=>$this->auth->id,
                     'admin_id'=>0,
-                    'order_no'=>getNewOrderId('fl'),
+                    'order_no'=>getNewOrderId(),
                     'collection_code'=>$v['imgurl'],
                     'state'=>1,
                     'is_sms'=>0,
                     'submit_time'=>time(),
                     'amount'=>$v['amount'],
-                    'usdtnum'=>round(bcdiv($v['amount'],$usdtprice,2)),
+                    'usdtnum'=>$usdtnum,
                     'usdtprice'=>$usdtprice,
-                    'fee'=>round(bcdiv(bcmul($v['amount'],Db::name('fee')->where('num','>=',$v['amount'])->order('id','asc')->value('value'),2),$usdtprice,2)),
-                    'all'=>$v['total'],//人民币总额
-                    'allusdt'=>round(bcdiv($v['total'],$usdtprice,2)),//usdt 总额
+                    'fee'=>$usdtfee,
+                    'all'=>$v['amount']+$rfee,//人民币总额
+                    'allusdt'=>$usdtnum+$usdtfee,
                 ];
             }
         }
