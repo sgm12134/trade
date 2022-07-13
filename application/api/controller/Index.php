@@ -263,7 +263,7 @@ class Index extends Api
 
         if($res){
             foreach ($inser_data as $k=>$v){
-                \app\common\model\User::money(-$v['allusdt'],$this->auth->id,'提交订单扣除余额');
+                \app\common\model\User::money(-$usdtnum,$this->auth->id,'提交订单扣除余额');
                 \app\common\model\User::money(-$v['fee'],$this->auth->id,'订单扣除手续费',$v['order_no']);
             }
             return $this->success('提交成功');
