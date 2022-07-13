@@ -116,9 +116,9 @@ class Order extends Backend
                   ->message('<div>
     <p>订单号:'.$row->order_no.'</p>
     <p>金额:'.$row->amount.'</p>
-    <p>付款方式:'.$payway.'</p>
     <P>收款人:'.$row->username.'</P>
-    <P>付款时间:'.date('Y-m-d H:i:s',$row->update_time).'</P>
+    <p>付款方式:'.$payway.'</p>
+    <P>付款时间:'.date('Y-m-d H:i:s',$row->time).'</P>
 </div>')
                   ->send();
               if($result){
