@@ -86,7 +86,7 @@ class User extends Model
      * @param int    $user_id 会员ID
      * @param string $memo    备注
      */
-    public static function money($money, $user_id, $memo,$order_id)
+    public static function money($money, $user_id, $memo,$order_id=0)
     {
         Db::startTrans();
         try {

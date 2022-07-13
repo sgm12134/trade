@@ -246,7 +246,19 @@ class Index extends Api
                 ];
             }
         }
-        $res=db('order')->insertAll($inser_data,'true');
+        $res=false;
+        Db::startTrans();
+        try{
+            $res=db('order')->insertAll($inser_data,'true');
+            if(!$res){
+                Db::rollback();
+            }
+
+            Db::commit();
+        }catch (\Exception $e){
+            Db::rollback();
+        }
+
         if($res){
             foreach ($inser_data as $k=>$v){
                 \app\common\model\User::money(-$v['allusdt'],$this->auth->id,'提交订单扣除余额');
