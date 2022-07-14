@@ -34,7 +34,7 @@ class Admin extends Backend
         $this->model = model('Admin');
 
         $this->childrenAdminIds = $this->auth->getChildrenAdminIds(true);
-        $this->childrenGroupIds = $this->auth->getChildrenGroupIds();
+        $this->childrenGroupIds = $this->auth->getChildrenGroupIds(true);
 
         $groupList = collection(AuthGroup::where('id', 'in', $this->childrenGroupIds)->select())->toArray();
 
