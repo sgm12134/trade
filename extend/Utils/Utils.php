@@ -64,10 +64,10 @@ class Utils
         try{
             $response = file_get_contents(self::FUTURE_API_URL.self::SERVER_TIMESTAMP_URL);
             $response = json_decode($response,true);
-
+           halt($response);
             return $response['iso'];
         }catch (Exception $e){
-            return '';
+            return $e;
         }
     }
 
