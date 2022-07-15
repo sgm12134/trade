@@ -11,13 +11,14 @@ use app\common\model\UserMoneyLog;
 use think\Config;
 use think\Db;
 use think\Validate;
+use Utils\SpotApi;
 
 /**
  * 首页接口
  */
 class Index extends Api
 {
-    protected $noNeedLogin = ['getfee'];
+    protected $noNeedLogin = ['getfee','test'];
     protected $noNeedRight = ['*'];
 
     /**
@@ -374,5 +375,9 @@ class Index extends Api
         }
         $this->success(__('成功'),$rate);
 
+    }
+    public  function  test(){
+     $rate= SpotApi::getExchangeRate();
+     halt($rate);
     }
 }

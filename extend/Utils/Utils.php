@@ -1,5 +1,6 @@
 <?php
 
+namespace Utils;
 class Utils
 {
     const apiKey = 'fde4fa02-d773-4413-952e-7a4c6bcadc80';
