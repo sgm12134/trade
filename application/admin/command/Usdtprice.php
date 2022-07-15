@@ -10,6 +10,7 @@ use think\console\Command;
 use think\console\Input;
 use think\console\Output;
 use think\Db;
+use think\Exception;
 use Utils\SpotApi;
 
 class Usdtprice extends Command
