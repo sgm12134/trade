@@ -21,9 +21,9 @@ class Usdtprice extends Command
     protected function execute(Input $input, Output $output){
 
         try {
-            $price=SpotApi::getExchangeRate()['data'][0]['usdCny'];
+           $dat= http_get('https://www.okx.com/v3/c2c/otc-ticker?t=1657883505409&baseCurrency=USDT&quoteCurrency=CNY');
             Db::name('config')->where('name','usdtprice')->update([
-                'value'=>$price
+                'value'=>$dat['data']['otcTicker']
             ]);
         } catch (Exception $e) {
             echo $e->getMessage(); // 返回自定义的异常信息
