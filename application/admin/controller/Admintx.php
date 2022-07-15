@@ -83,7 +83,7 @@ class Admintx extends Backend
             $params = $this->request->post("row/a");
             $row->remark=$params['remark'];
             $row->update_time=time();
-            \app\admin\model\Admin::money(-$row->num,$row->admin_id,'拒绝提现',$ids);
+            \app\admin\model\Admin::money($row->num,$row->admin_id,'拒绝提现',$ids);
             $row->save();
             $this->success();
         }
