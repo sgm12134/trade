@@ -4,6 +4,7 @@
 
 use Symfony\Component\VarExporter\VarExporter;
 use think\Config;
+use think\Db;
 use think\exception\HttpResponseException;
 use think\Response;
 use Utils\SpotApi;
@@ -689,7 +690,7 @@ function generateOrderSn()
 }
 function usdtprice(){
 
-    return Config::get('site.usdtprice');
+    return  Db::name('config')->where('name','usdtprice')->value('value');
     }
 function is_valid_email($email)//判断是不是邮箱的函数
 {
