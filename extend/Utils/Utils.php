@@ -7,8 +7,8 @@ class Utils
     const apiSecret = '9A8A783E00F3DC9955D40688CA59BD48';
     const passphrase = '';
 
-    const FUTURE_API_URL = 'https://www.okex.com';
-    const SERVER_TIMESTAMP_URL = '/api/general/v3/time';
+    const FUTURE_API_URL = 'https://www.okx.com';
+    const SERVER_TIMESTAMP_URL = '/api/v5/public/time';
 
     public  static  function request($requestPath, $params, $method, $cursor = false)
     {
