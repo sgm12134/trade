@@ -3,6 +3,7 @@
 // 公共助手函数
 
 use Symfony\Component\VarExporter\VarExporter;
+use think\Config;
 use think\exception\HttpResponseException;
 use think\Response;
 use Utils\SpotApi;
@@ -688,8 +689,7 @@ function generateOrderSn()
 }
 function usdtprice(){
 
-
-    return SpotApi::getExchangeRate()['data'][0]['usdCny'];
+    return Config::get('site.usdtprice');
     }
 function is_valid_email($email)//判断是不是邮箱的函数
 {
