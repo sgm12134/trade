@@ -18,6 +18,8 @@ class Usdtprice extends Command
         $this->setName('usdtprice')->setDescription("usdtprice");
     }
     protected function execute(Input $input, Output $output){
-       Config::set('site.usdtprice',SpotApi::getExchangeRate()['data'][0]['usdCny']);
+        $price=SpotApi::getExchangeRate()['data'][0]['usdCny'];
+        echo $price;
+       Config::set('usdtprice',$price);
     }
 }
