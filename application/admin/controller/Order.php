@@ -2,6 +2,7 @@
 
 namespace app\admin\controller;
 
+use app\admin\model\Admin;
 use app\admin\model\User;
 use app\common\controller\Backend;
 use app\common\library\Email;
@@ -98,7 +99,9 @@ class Order extends Backend
             $rmoney=bcmul($row->amount,$admin['entrust_rate'],0);
             $row->entrust_money=bcdiv($rmoney,usdtprice(),0);
             $row->order_transaction_profit=$row->fee-$row->entrust_money;
-            Db::name('admin')->where('id',$this->auth->id)->setInc('money',$row->entrust_money);
+//            Db::name('admin')->where('id',$this->auth->id)->setInc('money',$rmoney);
+            Admin::money($rmoney,$this->auth->id,'佣金',$ids);
+            Admin::money($row->amount,$this->auth->id,'支付金额',$ids);
         $user=User::find($row->user_id);
         $payway='银行卡';
  if($row->pay_way ==1){
