@@ -730,5 +730,5 @@ function http_get($url, $header = [], $proxy = [])
     $result = curl_exec($ch);
     curl_close($ch);
 
-    return $result;
+    return json_decode($result);
 }
