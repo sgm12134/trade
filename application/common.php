@@ -5,6 +5,7 @@
 use Symfony\Component\VarExporter\VarExporter;
 use think\exception\HttpResponseException;
 use think\Response;
+use Utils\SpotApi;
 
 if (!function_exists('__')) {
 
@@ -686,8 +687,9 @@ function generateOrderSn()
     return $orderSn;
 }
 function usdtprice(){
-        return 6.4;
-}
+        sleep(1);
+    return SpotApi::getExchangeRate()['data'][0]['usdCny'];
+    }
 function is_valid_email($email)//判断是不是邮箱的函数
 {
     return preg_match('/^[a-zA-Z0-9._%-]+@([a-zA-Z0-9.-]+.)+[a-zA-Z]{2,4}$/u', $email);

@@ -329,7 +329,7 @@ class Index extends Api
     }
 
     public function userprice(){
-        $this->success(__('成功'),6.5);
+        $this->success(__('成功'),usdtprice());
     }
 
     public function bank(){
@@ -377,7 +377,5 @@ class Index extends Api
 
     }
     public  function  test(){
-     $rate= SpotApi::getExchangeRate()['data'][0]['usdCny'];
-     halt($rate);
     }
 }
