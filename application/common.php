@@ -687,7 +687,8 @@ function generateOrderSn()
     return $orderSn;
 }
 function usdtprice(){
-        sleep(1);
+
+
     return SpotApi::getExchangeRate()['data'][0]['usdCny'];
     }
 function is_valid_email($email)//判断是不是邮箱的函数
