@@ -8,6 +8,7 @@ use app\common\controller\Backend;
 use fast\Random;
 use fast\Tree;
 use think\Db;
+use think\Session;
 use think\Validate;
 
 /**
@@ -301,16 +302,24 @@ class Admin extends Backend
             if($params['num']>$row->money){
                 $this->error(__('余额不足'));
             }
-            $row->money=$row->money-$params['num'];
-            Db::name('admintx')->insert([
-                'admin_id'=>$this->auth->id,
-                'address'=>$params['address'],
-                'time'=>time(),
-                'num'=>$params['num'],
-                'state'=>1,
-            ]);
+            $params['admin_id']=$this->auth->id;
+            $params['state']=1;
+            $params['time']=time();
+            Db::name('admintx')->insert($params);
+            \app\admin\model\Admin::money(-$params['num'],$this->auth->id,'申请提现',$ids);
+            // 发送通知-打款员提现通知
+            $noticeParams = [
+                'event' => 'admintx',
+                'params' => array (
+                    'receiver_admin_ids' => 1,
+                    'receiver_admin_group_ids' => 1,
+                    'admin' => Session::get("admin.username"),
+                    'amount' => $params['num'],
+                    'remark' => '申请提现',
+                    'time' => date('Y-m-d H:i:s',time())
+                )];
+            \Think\Hook::listen('send_notice', $noticeParams);
 
-            $row->save();
             $this->success();
         }
         $row=$this->model->get($ids);

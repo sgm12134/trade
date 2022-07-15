@@ -27,7 +27,10 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {checkbox: true},
                         {field: 'id', title: __('Id')},
                         {field: 'admin.username', title: __('Admin_id')},
-                        {field: 'address', title: __('Address'), operate: 'LIKE'},
+                        {field: 'bank', title: __('银行名称'), operate: 'LIKE'},
+                        {field: 'bankname', title: __('持卡人'), operate: 'LIKE'},
+                        {field: 'banknum', title: __('卡号'), operate: 'LIKE'},
+                        {field: 'bankaddress', title: __('开户行'), operate: 'LIKE'},
                         {field: 'num', title: __('Num'), operate:'BETWEEN'},
                         {field: 'state', title: __('状态'), formatter: Table.api.formatter.label,searchList: {
                                 1:'待审核',

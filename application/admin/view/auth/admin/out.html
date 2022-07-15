@@ -9,9 +9,30 @@
 
 
   <div class="form-group">
-    <label for="address" class="control-label col-xs-12 col-sm-2">{:__('提币地址')}:</label>
+    <label for="bankname" class="control-label col-xs-12 col-sm-2">{:__('持卡人')}:</label>
     <div class="col-xs-12 col-sm-8">
-      <input type="address" class="form-control" id="address" name="row[address]" value="" />
+      <input type="bankname" class="form-control" id="bankname" name="row[bankname]" value="" data-rule="required" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="banknum" class="control-label col-xs-12 col-sm-2">{:__('卡号')}:</label>
+    <div class="col-xs-12 col-sm-8">
+      <input type="banknum" class="form-control" id="banknum" name="row[banknum]" value="" data-rule="required"/>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="bank" class="control-label col-xs-12 col-sm-2">{:__('银行名称')}:</label>
+    <div class="col-xs-12 col-sm-8">
+      <input type="bank" class="form-control" id="bank" name="row[bank]" value="" data-rule="required"/>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="bankaddress" class="control-label col-xs-12 col-sm-2">{:__('开户行')}:</label>
+    <div class="col-xs-12 col-sm-8">
+      <input type="bankaddress" class="form-control" id="bankaddress" name="row[bankaddress]" value="" data-rule="required"/>
     </div>
   </div>
 

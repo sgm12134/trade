@@ -3,6 +3,7 @@
 namespace app\admin\controller;
 
 use app\admin\model\Admin;
+use app\admin\model\AdminMoneyLog;
 use app\admin\model\User;
 use app\common\controller\Backend;
 use app\common\model\Attachment;
@@ -23,60 +24,22 @@ class Dashboard extends Backend
      */
     public function index()
     {
-        try {
-            \think\Db::execute("SET @@sql_mode='';");
-        } catch (\Exception $e) {
+        if($this->auth->isSuperAdmin()){
+            $payed=   Db::name('order')->where('state',3)->sum('amount');
+            $commission=  AdminMoneyLog::where('memo','佣金')->sum('money');
+            $admin=Db::name('admin')->sum('money');
+
+        }else{
+            //已支付订单
+            $payed=   Db::name('order')->where('state',3)->where('admin_id',$this->auth->id)->sum('amount');
+            $commission=  AdminMoneyLog::where('user_id',$this->auth->id)->where('memo','佣金')->sum('money');
+            $admin=Db::name('admin')->where('id',$this->auth->id)->sum('money');
 
         }
-        $column = [];
-        $starttime = Date::unixtime('day', -6);
-        $endtime = Date::unixtime('day', 0, 'end');
-        $joinlist = Db("user")->where('jointime', 'between time', [$starttime, $endtime])
-            ->field('jointime, status, COUNT(*) AS nums, DATE_FORMAT(FROM_UNIXTIME(jointime), "%Y-%m-%d") AS join_date')
-            ->group('join_date')
-            ->select();
-        for ($time = $starttime; $time <= $endtime;) {
-            $column[] = date("Y-m-d", $time);
-            $time += 86400;
-        }
-        $userlist = array_fill_keys($column, 0);
-        foreach ($joinlist as $k => $v) {
-            $userlist[$v['join_date']] = $v['nums'];
-        }
-
-        $dbTableList = Db::query("SHOW TABLE STATUS");
-        $addonList = get_addon_list();
-        $totalworkingaddon = 0;
-        $totaladdon = count($addonList);
-        foreach ($addonList as $index => $item) {
-            if ($item['state']) {
-                $totalworkingaddon += 1;
-            }
-        }
-        $this->view->assign([
-            'totaluser'         => User::count(),
-            'totaladdon'        => $totaladdon,
-            'totaladmin'        => Admin::count(),
-            'totalcategory'     => \app\common\model\Category::count(),
-            'todayusersignup'   => User::whereTime('jointime', 'today')->count(),
-            'todayuserlogin'    => User::whereTime('logintime', 'today')->count(),
-            'sevendau'          => User::whereTime('jointime|logintime|prevtime', '-7 days')->count(),
-            'thirtydau'         => User::whereTime('jointime|logintime|prevtime', '-30 days')->count(),
-            'threednu'          => User::whereTime('jointime', '-3 days')->count(),
-            'sevendnu'          => User::whereTime('jointime', '-7 days')->count(),
-            'dbtablenums'       => count($dbTableList),
-            'dbsize'            => array_sum(array_map(function ($item) {
-                return $item['Data_length'] + $item['Index_length'];
-            }, $dbTableList)),
-            'totalworkingaddon' => $totalworkingaddon,
-            'attachmentnums'    => Attachment::count(),
-            'attachmentsize'    => Attachment::sum('filesize'),
-            'picturenums'       => Attachment::where('mimetype', 'like', 'image/%')->count(),
-            'picturesize'       => Attachment::where('mimetype', 'like', 'image/%')->sum('filesize'),
-        ]);
-
-        $this->assignconfig('column', array_keys($userlist));
-        $this->assignconfig('userdata', array_values($userlist));
+        $this->assign('payed',$payed);
+        $this->assign('commission',$commission);
+        $this->assign('admin_money',$admin);
+        $this->assign('admin_id',$this->auth->id);
 
         return $this->view->fetch();
     }

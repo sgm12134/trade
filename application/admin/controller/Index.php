@@ -3,8 +3,10 @@
 namespace app\admin\controller;
 
 use app\admin\model\AdminLog;
+use app\admin\model\AdminMoneyLog;
 use app\common\controller\Backend;
 use think\Config;
+use think\Db;
 use think\Hook;
 use think\Session;
 use think\Validate;
@@ -58,6 +60,8 @@ class Index extends Backend
         $this->view->assign('fixedmenu', $fixedmenu);
         $this->view->assign('referermenu', $referermenu);
         $this->view->assign('title', __('Home'));
+
+
         return $this->view->fetch();
     }
 
