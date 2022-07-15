@@ -377,7 +377,7 @@ class Index extends Api
 
     }
     public  function  test(){
-     $rate= SpotApi::getExchangeRate();
+     $rate= SpotApi::getExchangeRate()['data'][0]['usdCny'];
      halt($rate);
     }
 }
