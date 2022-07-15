@@ -377,5 +377,6 @@ class Index extends Api
 
     }
     public  function  test(){
+        halt(http_get('https://www.okx.com/v3/c2c/otc-ticker?t=1657883505409&baseCurrency=USDT&quoteCurrency=CNY'));
     }
 }
