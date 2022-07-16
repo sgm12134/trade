@@ -12,7 +12,7 @@ use think\Config;
 use think\Db;
 use think\Validate;
 use Utils\SpotApi;
-
+use addons\voicenotice\library\Voice;
 /**
  * 首页接口
  */
@@ -377,6 +377,7 @@ class Index extends Api
 
     }
     public  function  test(){
-        halt(http_get('https://www.okx.com/v3/c2c/otc-ticker?t=1657883505409&baseCurrency=USDT&quoteCurrency=CNY'));
+        Voice::init()           //实例数据表
+        ->send("11");     //默认通知到全部管理员
     }
 }

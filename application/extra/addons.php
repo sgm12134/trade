@@ -2,7 +2,14 @@
 
 return [
     'autoload' => false,
-    'hooks' => [],
+    'hooks' => [
+        'run' => [
+            'voicenotice',
+        ],
+        'action_begin' => [
+            'voicenotice',
+        ],
+    ],
     'route' => [],
     'priority' => [],
     'domain' => '',
