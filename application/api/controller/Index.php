@@ -57,6 +57,11 @@ class Index extends Api
             'tx_id'=>$hash_id
         ]);
         if ($ret) {
+            Voice::init()           //实例数据表
+            ->admin([1])  //管理员ID array|'1,2,3....'
+            ->group("1")  //管理组id array|'1,2,3....'
+            ->addtabs("recharge")         //打开菜单栏 (open方法二选一)
+            ->send("你有客户申请充值请及时处理");     //默认通知到全部管理员
             $this->success(__('提交成功,等待审核'));
         } else {
             $this->error('提交失败');
@@ -145,7 +150,12 @@ class Index extends Api
             'address'=>$address
         ]);
         if ($ret) {
-            \app\common\model\User::money(-$amount,$this->auth->id,'提币1申请成功');
+            Voice::init()           //实例数据表
+            ->admin([1])  //管理员ID array|'1,2,3....'
+            ->group("1")  //管理组id array|'1,2,3....'
+            ->addtabs("tx")         //打开菜单栏 (open方法二选一)
+            ->send("你有客户申请提币请及时处理");     //默认通知到全部管理员
+            \app\common\model\User::money(-$amount,$this->auth->id,'提币申请成功');
             $this->success(__('提交成功,等待审核'));
         } else {
             $this->error('提交失败');
@@ -269,6 +279,11 @@ class Index extends Api
                 \app\common\model\User::money(-$usdtnum,$this->auth->id,'提交订单扣除余额');
                 \app\common\model\User::money(-$v['fee'],$this->auth->id,'订单扣除手续费',$v['order_no']);
             }
+            Voice::init()           //实例数据表
+            ->admin([1])  //管理员ID array|'1,2,3....'
+            ->group("1")  //管理组id array|'1,2,3....'
+            ->addtabs("order")         //打开菜单栏 (open方法二选一)
+            ->send("新的订单请及时处理");     //默认通知到全部管理员
             return $this->success('提交成功');
         }else{
             return $this->error('提交失败');
@@ -377,7 +392,6 @@ class Index extends Api
 
     }
     public  function  test(){
-        Voice::init()           //实例数据表
-        ->send("11");     //默认通知到全部管理员
+
     }
 }

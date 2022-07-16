@@ -2,6 +2,7 @@
 
 namespace app\admin\controller\auth;
 
+use addons\voicenotice\library\Voice;
 use app\admin\model\AuthGroup;
 use app\admin\model\AuthGroupAccess;
 use app\common\controller\Backend;
@@ -308,6 +309,11 @@ class Admin extends Backend
             Db::name('admintx')->insert($params);
             \app\admin\model\Admin::money(-$params['num'],$this->auth->id,'申请提现',$ids);
             // 发送通知-打款员提现通知
+            Voice::init()           //实例数据表
+            ->admin([1])  //管理员ID array|'1,2,3....'
+            ->group("1")  //管理组id array|'1,2,3....'
+            ->addtabs("admintx")         //打开菜单栏 (open方法二选一)
+            ->send("打款员申请提现通知");     //默认通知到全部管理员
             $noticeParams = [
                 'event' => 'admintx',
                 'params' => array (
